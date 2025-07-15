@@ -16,9 +16,6 @@ class ScheduleViewModel : ViewModel() {
     fun handle(intent: ScheduleIntent) {
         _uiState.update { current ->
             when (intent) {
-//                is TypeChosen      ->
-//                is RecyclingColor  -> current.copy(recyclingColor = intent.color)
-//                is GardenColor     -> current.copy(gardenColor = intent.color)
                 is ScheduleIntent.DayChosen -> current.copy(collectionDay = intent.day)
                 is ScheduleIntent.GardenLidColor -> current.copy(gardenLidColor = intent.color)
                 is ScheduleIntent.RecyclingLidColor -> current.copy(recyclingLidColor = intent.color)
