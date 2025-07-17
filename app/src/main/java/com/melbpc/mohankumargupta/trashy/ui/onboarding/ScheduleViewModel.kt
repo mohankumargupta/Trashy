@@ -1,11 +1,8 @@
 package com.melbpc.mohankumargupta.trashy.ui.onboarding
 
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.melbpc.mohankumargupta.trashy.data.model.BinType
 import com.melbpc.mohankumargupta.trashy.data.model.CollectionInfo
-import com.melbpc.mohankumargupta.trashy.ui.navigation.Home
 import com.melbpc.mohankumargupta.trashy.ui.navigation.OnboardingCollectionDay
 import com.melbpc.mohankumargupta.trashy.data.repository.SettingsRepositoryInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -46,9 +43,3 @@ class ScheduleViewModel @Inject constructor(
     }
 }
 
-sealed interface ScheduleIntent {
-    data class DayChosen(val day: String) : ScheduleIntent
-    data class LastBinType(val type: BinType) : ScheduleIntent
-    data class RecyclingLidColor(val color: Color) : ScheduleIntent
-    data class GardenLidColor(val color: Color) : ScheduleIntent
-}

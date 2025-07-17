@@ -10,7 +10,9 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
-import com.melbpc.mohankumargupta.trashy.ui.onboarding.CollectionDay
+import com.melbpc.mohankumargupta.trashy.ui.onboarding.CollectionDayScreen
+import com.melbpc.mohankumargupta.trashy.ui.onboarding.LastCollectionScreen
+import com.melbpc.mohankumargupta.trashy.ui.onboarding.ScheduleIntent
 import com.melbpc.mohankumargupta.trashy.ui.onboarding.ScheduleViewModel
 
 @Composable
@@ -31,11 +33,21 @@ fun AppNavigation(
         ),
         entryProvider = entryProvider {
             entry(OnboardingCollectionDay) {
-                CollectionDay()
+                CollectionDayScreen(
+                    onDayChosen = { day ->
+                        viewModel.handle(ScheduleIntent.DayChosen(day))
+                        backStack.add(OnboardingLastCollectionType)
+                    }
+                )
             }
 
             entry(OnboardingLastCollectionType) {
-
+                LastCollectionScreen(
+                    onLastCollectionChosen = { collection ->
+                        viewModel.handle(ScheduleIntent.LastBinType(collection))
+                        backStack.add(OnboardingLastCollectionType)
+                    }
+                )
             }
 
             entry(OnboardingRecyclingLidColor) {
