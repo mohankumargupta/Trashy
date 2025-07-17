@@ -3,6 +3,7 @@ package com.melbpc.mohankumargupta.trashy.ui.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entry
 import androidx.navigation3.runtime.entryProvider
@@ -10,18 +11,15 @@ import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
 import com.melbpc.mohankumargupta.trashy.ui.onboarding.CollectionDay
-
-
-//Routes
-data object OnboardingCollectionDay
-data object OnboardingLastCollectionType
-data object OnboardingRecyclingLidColor
-data object OnboardingGardenLidColor
-data object Home
+import com.melbpc.mohankumargupta.trashy.ui.onboarding.ScheduleViewModel
 
 @Composable
-fun AppNavigation() {
-    val backStack = remember { mutableStateListOf<Any>(OnboardingCollectionDay) }
+fun AppNavigation(
+    viewModel: ScheduleViewModel = hiltViewModel()
+) {
+    val navkey = viewModel.navKey
+    val backStack = remember { mutableStateListOf<Any>(navkey.value) }
+
 
     NavDisplay(
       backStack = backStack,
@@ -55,12 +53,5 @@ fun AppNavigation() {
     )
 }
 
-//@Composable
-//fun OnboardingNavigation() {
-//
-//}
-//
-//@Composable
-//fun HomeNavigation() {
-//
-//}
+
+

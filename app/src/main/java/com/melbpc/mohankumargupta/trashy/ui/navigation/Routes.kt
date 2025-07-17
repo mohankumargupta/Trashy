@@ -1,0 +1,7 @@
+package com.melbpc.mohankumargupta.trashy.ui.navigation
+
+data object OnboardingCollectionDay
+data object OnboardingLastCollectionType
+data object OnboardingRecyclingLidColor
+data object OnboardingGardenLidColor
+data object Home
