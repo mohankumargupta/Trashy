@@ -2,6 +2,7 @@ package com.melbpc.mohankumargupta.trashy.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -10,8 +11,13 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -67,19 +73,31 @@ fun ColorButton(
     onSelectColor: () -> Unit
 
 ) {
+    var isFocused by remember { mutableStateOf(false) }
+
     OutlinedButton(
         modifier = modifier
+            .onFocusChanged { focusState ->
+                isFocused = focusState.isFocused
+            }
             .padding(12.dp)
-            .size(50.dp),
+            .size(50.dp)
+        ,
         shape = ButtonDefaults.shape(CircleShape),
         border = ButtonDefaults.border(
             Border(
                 BorderStroke(
-                    width = 1.dp,
-                    color = color
+                    width = if (isFocused) 3.dp else 1.dp,
+                    color = if (isFocused) Color.White else Color.Black,
                 )
             )
         ),
+        colors = ButtonDefaults.colors(
+            containerColor = color,
+            focusedContainerColor = color
+        ),
+        scale = ButtonDefaults.scale(focusedScale = 1.2f),
+        contentPadding = PaddingValues(0.dp), // Remove default padding
         onClick = {
             onSelectColor()
         },

@@ -40,14 +40,18 @@ fun LastCollectionScreen(modifier: Modifier = Modifier, onLastCollectionChosen: 
         ) {
             WideButton(
                 modifier = modifier,
-                onClick = { },
+                onClick = {
+                    onLastCollectionChosen(BinType.RECYCLING)
+                },
             ) {
                 Text("Recycling")
             }
 
             WideButton(
                 modifier = modifier,
-                onClick = { },
+                onClick = {
+                    onLastCollectionChosen(BinType.GARDEN)
+                },
             ) {
                 Text("Garden")
             }
