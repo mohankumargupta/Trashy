@@ -57,9 +57,10 @@ fun CollectionDayScreen(modifier: Modifier = Modifier, onDayChosen: (String) -> 
 
         LazyColumn(
             modifier = modifier
-                .fillMaxWidth()
+                .fillMaxHeight()
                 .weight(1f)
-                .padding(16.dp),
+                .padding(16.dp)
+            ,
             verticalArrangement = Arrangement.spacedBy(16.dp)
 
         ) {

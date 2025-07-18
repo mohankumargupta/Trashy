@@ -11,7 +11,9 @@ import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
 import com.melbpc.mohankumargupta.trashy.ui.onboarding.CollectionDayScreen
+import com.melbpc.mohankumargupta.trashy.ui.onboarding.GardenLidScreen
 import com.melbpc.mohankumargupta.trashy.ui.onboarding.LastCollectionScreen
+import com.melbpc.mohankumargupta.trashy.ui.onboarding.RecyclingLidScreen
 import com.melbpc.mohankumargupta.trashy.ui.onboarding.ScheduleIntent
 import com.melbpc.mohankumargupta.trashy.ui.onboarding.ScheduleViewModel
 
@@ -45,17 +47,27 @@ fun AppNavigation(
                 LastCollectionScreen(
                     onLastCollectionChosen = { collection ->
                         viewModel.handle(ScheduleIntent.LastBinType(collection))
-                        backStack.add(OnboardingLastCollectionType)
+                        backStack.add(OnboardingRecyclingLidColor)
                     }
                 )
             }
 
             entry(OnboardingRecyclingLidColor) {
-
+                RecyclingLidScreen(
+                    onRecyclingLidColorChosen = { color ->
+                        viewModel.handle(ScheduleIntent.RecyclingLidColor(color))
+                        backStack.add(OnboardingGardenLidColor)
+                    }
+                )
             }
 
             entry(OnboardingGardenLidColor) {
-
+                GardenLidScreen(
+                    onGardenLidColorChosen = { color ->
+                        viewModel.handle(ScheduleIntent.GardenLidColor(color))
+                        backStack.add(Home)
+                    }
+                )
             }
 
             entry(Home) {
