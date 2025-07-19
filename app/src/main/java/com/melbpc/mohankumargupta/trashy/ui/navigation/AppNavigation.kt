@@ -10,6 +10,8 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
+import com.melbpc.mohankumargupta.trashy.R
+import com.melbpc.mohankumargupta.trashy.ui.home.HomeScreen
 import com.melbpc.mohankumargupta.trashy.ui.onboarding.CollectionDayScreen
 import com.melbpc.mohankumargupta.trashy.ui.onboarding.GardenLidScreen
 import com.melbpc.mohankumargupta.trashy.ui.onboarding.LastCollectionScreen
@@ -71,6 +73,14 @@ fun AppNavigation(
             }
 
             entry(Home) {
+                HomeScreen(
+                    bin = R.drawable.recycling_bin_black,
+                    onReset = {
+                        //backStack.clear()
+                        //backStack.add(Home)
+                        backStack.add(OnboardingCollectionDay)
+                    }
+                )
 
             }
         }
