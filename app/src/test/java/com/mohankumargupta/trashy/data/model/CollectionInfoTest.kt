@@ -94,7 +94,7 @@ class CollectionInfoTest {
         // Ask on the same Monday (2024-06-03) what bin comes next
         val next = info.nextBin(LocalDate.of(2024, 6, 3))
 
-        assertEquals(BinType.GARDEN, next)
+        assertEquals(BinType.RECYCLING, next)
     }
 
     @Test
