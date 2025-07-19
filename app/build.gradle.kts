@@ -65,6 +65,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+    testImplementation(kotlin("test"))
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
@@ -76,4 +77,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.navigation3)
     implementation(libs.kotlinx.serialization.core)
     implementation(libs.androidx.datastore.preferences)
+
+    tasks.withType<Test>().configureEach {
+        useJUnitPlatform()                  // run JUnit 5 in unit-test source-set
+    }
 }
