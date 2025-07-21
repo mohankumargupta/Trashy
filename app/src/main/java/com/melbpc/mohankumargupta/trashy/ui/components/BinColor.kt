@@ -55,8 +55,8 @@ fun BinColor(modifier: Modifier = Modifier, binType: BinType, onClick: (Color) -
             ) {
                 items(rowColors) { color ->
                     ColorButton(
-                        color = color.color,
-                        onSelectColor = { onClick(color.color) }
+                        color = color.toColor(),
+                        onSelectColor = { onClick(color.toColor()) }
                     )
                 }
             }
@@ -109,7 +109,7 @@ fun ColorButton(
 @Composable
 @Preview(showBackground = true)
 fun BinColorPreview(modifier: Modifier = Modifier) {
-  BinColor(binType = BinType.RECYCLING, onClick = {})
+  BinColor(modifier = modifier, binType = BinType.RECYCLING, onClick = {})
 }
 
 

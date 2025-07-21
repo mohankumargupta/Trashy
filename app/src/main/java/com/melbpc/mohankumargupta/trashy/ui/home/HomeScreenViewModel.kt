@@ -7,11 +7,11 @@ import com.melbpc.mohankumargupta.trashy.data.model.ColorSwatch
 import com.melbpc.mohankumargupta.trashy.ui.navigation.RouteHome
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
 @HiltViewModel(assistedFactory = HomeScreenViewModel.Factory::class)
-class HomeScreenViewModel @Inject constructor(
+class HomeScreenViewModel @AssistedInject constructor(
   @Assisted val navKey: RouteHome
 ) : ViewModel() {
 
