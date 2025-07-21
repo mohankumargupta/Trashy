@@ -8,5 +8,5 @@ import com.melbpc.mohankumargupta.trashy.ui.components.BinColor
 
 @Composable
 fun GardenLidScreen(modifier: Modifier = Modifier, onGardenLidColorChosen: (Color) -> Unit) {
-    BinColor(binType = BinType.GARDEN, onClick = onGardenLidColorChosen)
+    BinColor(modifier, binType = BinType.GARDEN, onClick = onGardenLidColorChosen)
 }

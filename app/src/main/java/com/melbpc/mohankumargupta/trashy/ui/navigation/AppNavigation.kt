@@ -26,7 +26,7 @@ fun AppNavigation(
     viewModel: ScheduleViewModel = hiltViewModel()
 ) {
     val navKey = viewModel.navKey
-    val backStack = remember { mutableStateListOf<NavigationRoute>(navKey.value) }
+    val backStack = remember { mutableStateListOf(navKey.value) }
 
     NavDisplay(
         backStack = backStack,

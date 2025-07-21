@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -42,8 +41,7 @@ fun CollectionDayScreen(modifier: Modifier = Modifier, onDayChosen: (String) -> 
             modifier = modifier
                 .fillMaxHeight()
                 .weight(2f)
-                .padding(horizontal = 16.dp)
-            , contentAlignment = Alignment.Center
+                .padding(horizontal = 16.dp), contentAlignment = Alignment.Center
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -59,8 +57,7 @@ fun CollectionDayScreen(modifier: Modifier = Modifier, onDayChosen: (String) -> 
             modifier = modifier
                 .fillMaxHeight()
                 .weight(1f)
-                .padding(16.dp)
-            ,
+                .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
 
         ) {
@@ -84,5 +81,5 @@ fun CollectionDayScreen(modifier: Modifier = Modifier, onDayChosen: (String) -> 
 @Composable
 @Preview(showBackground = true)
 fun CollectionDayPreview(modifier: Modifier = Modifier) {
-    CollectionDayScreen(onDayChosen = {})
+    CollectionDayScreen(modifier = modifier, onDayChosen = {})
 }
