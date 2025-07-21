@@ -7,12 +7,13 @@ import com.melbpc.mohankumargupta.trashy.ui.navigation.RouteOnboardingCollection
 import com.melbpc.mohankumargupta.trashy.data.repository.SettingsRepositoryInterface
 import com.melbpc.mohankumargupta.trashy.ui.navigation.NavigationRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jakarta.inject.Inject
+//import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import javax.inject.Inject
 
 @HiltViewModel
 class ScheduleViewModel @Inject constructor(

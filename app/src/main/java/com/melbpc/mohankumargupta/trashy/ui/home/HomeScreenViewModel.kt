@@ -6,10 +6,11 @@ import com.melbpc.mohankumargupta.trashy.data.model.BinType
 import com.melbpc.mohankumargupta.trashy.data.model.ColorSwatch
 import com.melbpc.mohankumargupta.trashy.ui.navigation.RouteHome
 import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-@HiltViewModel()
+@HiltViewModel(assistedFactory = HomeScreenViewModel.Factory::class)
 class HomeScreenViewModel @Inject constructor(
   @Assisted val navKey: RouteHome
 ) : ViewModel() {
@@ -36,6 +37,8 @@ class HomeScreenViewModel @Inject constructor(
         BinType.GARDEN    to ColorSwatch.Purple    -> R.drawable.garden_bin_purple
         else -> R.drawable.recycling_bin_black
     }
+
+    @AssistedFactory
     interface Factory {
         fun create(navKey: RouteHome): HomeScreenViewModel
     }
