@@ -1,22 +1,23 @@
 package com.melbpc.mohankumargupta.trashy.ui.navigation
 
-import androidx.annotation.DrawableRes
+import com.melbpc.mohankumargupta.trashy.data.model.BinType
+import com.melbpc.mohankumargupta.trashy.data.model.ColorSwatch
 import kotlinx.serialization.Serializable
 
 sealed interface NavigationRoute
 
 @Serializable
-data object OnboardingCollectionDay : NavigationRoute
+data object RouteOnboardingCollectionDay : NavigationRoute
 
 @Serializable
-data object OnboardingLastCollectionType :  NavigationRoute
+data object RouteOnboardingLastCollectionType :  NavigationRoute
 
 @Serializable
-data object OnboardingRecyclingLidColor : NavigationRoute
+data object RouteOnboardingRecyclingLidColor : NavigationRoute
 
 @Serializable
-data object OnboardingGardenLidColor : NavigationRoute
+data object RouteOnboardingGardenLidColor : NavigationRoute
 
 @Serializable
-data class Home(@param:DrawableRes val binDrawable: Int) : NavigationRoute
+data class RouteHome(val binType: BinType, val color: ColorSwatch) : NavigationRoute
 

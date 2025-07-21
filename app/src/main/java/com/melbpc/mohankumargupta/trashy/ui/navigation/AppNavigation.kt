@@ -10,8 +10,10 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
-import com.melbpc.mohankumargupta.trashy.R
+import com.melbpc.mohankumargupta.trashy.data.model.BinType
+import com.melbpc.mohankumargupta.trashy.data.model.ColorSwatch
 import com.melbpc.mohankumargupta.trashy.ui.home.HomeScreen
+import com.melbpc.mohankumargupta.trashy.ui.home.HomeScreenViewModel
 import com.melbpc.mohankumargupta.trashy.ui.onboarding.CollectionDayScreen
 import com.melbpc.mohankumargupta.trashy.ui.onboarding.GardenLidScreen
 import com.melbpc.mohankumargupta.trashy.ui.onboarding.LastCollectionScreen
@@ -35,49 +37,52 @@ fun AppNavigation(
             rememberViewModelStoreNavEntryDecorator()
         ),
         entryProvider = entryProvider {
-            entry<OnboardingCollectionDay> {
+            entry<RouteOnboardingCollectionDay> {
                 CollectionDayScreen(
                     onDayChosen = { day ->
                         viewModel.handle(ScheduleIntent.DayChosen(day))
-                        backStack.add(OnboardingLastCollectionType)
+                        backStack.add(RouteOnboardingLastCollectionType)
                     }
                 )
             }
 
-            entry<OnboardingLastCollectionType> {
+            entry<RouteOnboardingLastCollectionType> {
                 LastCollectionScreen(
                     onLastCollectionChosen = { collection ->
                         viewModel.handle(ScheduleIntent.LastBinType(collection))
-                        backStack.add(OnboardingRecyclingLidColor)
+                        backStack.add(RouteOnboardingRecyclingLidColor)
                     }
                 )
             }
 
-            entry<OnboardingRecyclingLidColor> {
+            entry<RouteOnboardingRecyclingLidColor> {
                 RecyclingLidScreen(
                     onRecyclingLidColorChosen = { color ->
                         viewModel.handle(ScheduleIntent.RecyclingLidColor(color))
-                        backStack.add(OnboardingGardenLidColor)
+                        backStack.add(RouteOnboardingGardenLidColor)
                     }
                 )
             }
 
-            entry<OnboardingGardenLidColor> {
+            entry<RouteOnboardingGardenLidColor> {
                 GardenLidScreen(
                     onGardenLidColorChosen = { color ->
                         viewModel.handleFinalOnboardingScreen(ScheduleIntent.GardenLidColor(color))
-                        backStack.add(Home(R.drawable.recycling_bin_black))
+                        backStack.add(RouteHome(BinType.RECYCLING, ColorSwatch.Black))
                     }
                 )
             }
 
-            entry<Home> { binDrawable ->
+            entry<RouteHome> { key ->
+                val viewModel = hiltViewModel<HomeScreenViewModel, HomeScreenViewModel.Factory>(
+                    creationCallback = { factory ->
+                        factory.create(key)
+                    }
+                )
                 HomeScreen(
-                    bin = binDrawable.binDrawable,
+                    viewModel = viewModel,
                     onReset = {
-                        //backStack.clear()
-                        //backStack.add(Home)
-                        backStack.add(OnboardingCollectionDay)
+                        backStack.add(RouteOnboardingCollectionDay)
                     }
                 )
 

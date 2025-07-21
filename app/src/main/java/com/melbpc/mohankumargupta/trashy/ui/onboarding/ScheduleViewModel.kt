@@ -2,9 +2,8 @@ package com.melbpc.mohankumargupta.trashy.ui.onboarding
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.tv.material3.SuggestionChip
 import com.melbpc.mohankumargupta.trashy.data.model.CollectionInfo
-import com.melbpc.mohankumargupta.trashy.ui.navigation.OnboardingCollectionDay
+import com.melbpc.mohankumargupta.trashy.ui.navigation.RouteOnboardingCollectionDay
 import com.melbpc.mohankumargupta.trashy.data.repository.SettingsRepositoryInterface
 import com.melbpc.mohankumargupta.trashy.ui.navigation.NavigationRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +20,7 @@ class ScheduleViewModel @Inject constructor(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(CollectionInfo())
     val uiState: StateFlow<CollectionInfo>  = _uiState
-    private val _navKey = MutableStateFlow<NavigationRoute>(OnboardingCollectionDay)
+    private val _navKey = MutableStateFlow<NavigationRoute>(RouteOnboardingCollectionDay)
     val navKey: StateFlow<NavigationRoute>  = _navKey
 
     fun handle(intent: ScheduleIntent) {

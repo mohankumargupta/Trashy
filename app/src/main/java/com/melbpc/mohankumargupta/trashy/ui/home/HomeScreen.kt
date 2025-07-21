@@ -21,11 +21,12 @@ import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.res.painterResource
+import com.melbpc.mohankumargupta.trashy.R
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    @DrawableRes bin: Int,
+    viewModel: HomeScreenViewModel,
     onReset: () -> Unit,
 ) {
     Box(
@@ -51,7 +52,7 @@ fun HomeScreen(
         contentAlignment = Alignment.Center,
     ) {
         Image(
-            painter = painterResource(id = bin),
+            painter = painterResource(id = viewModel.bin),
             contentDescription = "next collection bin",
 
         )
