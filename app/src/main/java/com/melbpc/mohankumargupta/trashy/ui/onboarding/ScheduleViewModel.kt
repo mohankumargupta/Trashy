@@ -2,6 +2,7 @@ package com.melbpc.mohankumargupta.trashy.ui.onboarding
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.tv.material3.SuggestionChip
 import com.melbpc.mohankumargupta.trashy.data.model.CollectionInfo
 import com.melbpc.mohankumargupta.trashy.ui.navigation.OnboardingCollectionDay
 import com.melbpc.mohankumargupta.trashy.data.repository.SettingsRepositoryInterface
@@ -19,27 +20,34 @@ class ScheduleViewModel @Inject constructor(
     private val settingsRepository: SettingsRepositoryInterface
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(CollectionInfo())
-    val uiState: StateFlow<CollectionInfo> = _uiState
+    val uiState: StateFlow<CollectionInfo>  = _uiState
     private val _navKey = MutableStateFlow<NavigationRoute>(OnboardingCollectionDay)
-    val navKey: StateFlow<NavigationRoute> = _navKey
-
-    init {
-        viewModelScope.launch {
-
-        }
-    }
+    val navKey: StateFlow<NavigationRoute>  = _navKey
 
     fun handle(intent: ScheduleIntent) {
         _uiState.update { current ->
             when (intent) {
                 is ScheduleIntent.DayChosen -> current.copy(collectionDay = intent.day)
-                is ScheduleIntent.GardenLidColor -> current.copy(gardenLidColor = intent.color)
+                is ScheduleIntent.GardenLidColor -> {
+                    current.copy(gardenLidColor = intent.color)
+                }
                 is ScheduleIntent.RecyclingLidColor -> current.copy(recyclingLidColor = intent.color)
                 is ScheduleIntent.LastBinType -> {
                     current.copy(lastCollectionBinType = intent.type)
                     current.copy(infoDate = LocalDate.now())
                 }
             }
+        }
+    }
+
+    fun handleFinalOnboardingScreen(intent: ScheduleIntent) {
+        handle(intent)
+        save()
+    }
+
+    private fun save() {
+        viewModelScope.launch {
+            //settingsRepository.save(uiState.value)
         }
     }
 }

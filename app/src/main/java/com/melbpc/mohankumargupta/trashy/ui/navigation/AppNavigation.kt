@@ -65,7 +65,7 @@ fun AppNavigation(
             entry<OnboardingGardenLidColor> {
                 GardenLidScreen(
                     onGardenLidColorChosen = { color ->
-                        viewModel.handle(ScheduleIntent.GardenLidColor(color))
+                        viewModel.handleFinalOnboardingScreen(ScheduleIntent.GardenLidColor(color))
                         backStack.add(Home(R.drawable.recycling_bin_black))
                     }
                 )
