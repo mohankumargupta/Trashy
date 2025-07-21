@@ -23,22 +23,19 @@ data class CollectionInfo (
         return lastCollectionDate.minusWeeks(weeksBack)
     }
 
-    fun nextBin(date: LocalDate): BinType {
+    fun nextBinRecycling(date: LocalDate): Boolean {
         val day = DayOfWeek.valueOf(collectionDay.uppercase())
 
-        // The next collection day on or after the given date
         val nextCollectionDate =
             if (date.dayOfWeek == day) date
             else date.with(TemporalAdjusters.next(day))
 
-        // Number of whole weeks between the reference recycling date and the next collection
         val weeksDelta = java.time.temporal.ChronoUnit.WEEKS.between(
             getReferenceRecyclingDate(),
             nextCollectionDate
         )
 
-        // Even weeks → recycling, odd weeks → garden
-        return if (weeksDelta % 2 == 0L) BinType.RECYCLING else BinType.GARDEN
+        return weeksDelta % 2 == 0L
     }
 
 

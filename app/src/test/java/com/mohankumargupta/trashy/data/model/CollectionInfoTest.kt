@@ -77,9 +77,9 @@ class CollectionInfoTest {
         )
 
         // Ask on the following Monday (2024-05-27) what bin comes next
-        val next = info.nextBin(LocalDate.of(2024, 5, 27))
+        val next = info.nextBinRecycling(LocalDate.of(2024, 5, 27))
 
-        assertEquals(BinType.RECYCLING, next)
+        assertEquals(true, next)
     }
 
     @Test
@@ -92,9 +92,9 @@ class CollectionInfoTest {
         )
 
         // Ask on the same Monday (2024-06-03) what bin comes next
-        val next = info.nextBin(LocalDate.of(2024, 6, 3))
+        val next = info.nextBinRecycling(LocalDate.of(2024, 6, 3))
 
-        assertEquals(BinType.RECYCLING, next)
+        assertEquals(true, next)
     }
 
     @Test
@@ -107,9 +107,9 @@ class CollectionInfoTest {
         )
 
         // Ask on the very same day (2024-07-17) what bin comes next
-        val next = info.nextBin(info.infoDate)
+        val next = info.nextBinRecycling(info.infoDate)
 
-        assertEquals(BinType.GARDEN, next)
+        assertEquals(false, next)
     }
 
 }
