@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,6 +34,10 @@ fun CollectionDayScreen(modifier: Modifier = Modifier, onDayChosen: (String) -> 
         First, choose your collection day from the
         days of the week on the right.
     """.trimIndent()
+
+    LaunchedEffect(Unit) {
+        firstFocus.requestFocus()
+    }
 
     Row(modifier = modifier.fillMaxSize()) {
 
