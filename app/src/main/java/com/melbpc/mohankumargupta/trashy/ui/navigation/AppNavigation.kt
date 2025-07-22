@@ -1,9 +1,11 @@
 package com.melbpc.mohankumargupta.trashy.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entry
 import androidx.navigation3.runtime.entryProvider
@@ -23,10 +25,10 @@ import com.melbpc.mohankumargupta.trashy.ui.onboarding.ScheduleViewModel
 
 @Composable
 fun AppNavigation(
-    viewModel: ScheduleViewModel = hiltViewModel()
+    viewModel: ScheduleViewModel = hiltViewModel(),
+    navViewModel: NavigationViewModel = hiltViewModel(),
 ) {
-    val navKey = viewModel.navKey
-    val backStack = remember { mutableStateListOf(navKey.value) }
+    val backStack = remember { mutableStateListOf<NavigationRoute>(RouteInitialScreen) }
 
     NavDisplay(
         backStack = backStack,
@@ -37,6 +39,32 @@ fun AppNavigation(
             rememberViewModelStoreNavEntryDecorator()
         ),
         entryProvider = entryProvider {
+
+            entry<RouteInitialScreen> {
+                val isOnboardingComplete by navViewModel.isOnboardingComplete.collectAsStateWithLifecycle()
+                if (isOnboardingComplete) {
+                    val key = RouteHome(BinType.RECYCLING, ColorSwatch.Blue)
+                    val viewModel = hiltViewModel<HomeScreenViewModel, HomeScreenViewModel.Factory>(
+                        creationCallback = { factory ->
+                            factory.create(key)
+                        }
+                    )
+                    HomeScreen(
+                        viewModel = viewModel,
+                        onReset = {
+                            backStack.add(RouteOnboardingCollectionDay)
+                        }
+                    )
+                } else {
+                    CollectionDayScreen(
+                        onDayChosen = { day ->
+                            viewModel.handle(ScheduleIntent.DayChosen(day))
+                            backStack.add(RouteOnboardingLastCollectionType)
+                        }
+                    )
+                }
+            }
+
             entry<RouteOnboardingCollectionDay> {
                 CollectionDayScreen(
                     onDayChosen = { day ->
