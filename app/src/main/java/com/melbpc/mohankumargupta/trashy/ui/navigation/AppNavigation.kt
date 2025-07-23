@@ -41,9 +41,10 @@ fun AppNavigation(
         entryProvider = entryProvider {
 
             entry<RouteInitialScreen> {
+
                 val isOnboardingComplete by navViewModel.isOnboardingComplete.collectAsStateWithLifecycle()
                 if (isOnboardingComplete) {
-                    val key = RouteHome(BinType.RECYCLING, ColorSwatch.Blue)
+                    val key = navViewModel.getInitialHomeRouteParams()
                     val viewModel = hiltViewModel<HomeScreenViewModel, HomeScreenViewModel.Factory>(
                         creationCallback = { factory ->
                             factory.create(key)

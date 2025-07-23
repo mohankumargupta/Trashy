@@ -46,7 +46,7 @@ class ScheduleViewModel @Inject constructor(
 
     private fun save() {
         viewModelScope.launch {
-            //settingsRepository.save(uiState.value)
+            settingsRepository.save(uiState.value)
         }
     }
 }

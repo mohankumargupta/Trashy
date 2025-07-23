@@ -17,8 +17,10 @@ import javax.inject.Singleton
 object SettingsModule {
     @Provides
     @Singleton
-    fun provideSettingsRepository(): SettingsRepositoryInterface {
-        return SettingsRepository()
+    fun provideSettingsRepository(
+        dataSource: SettingsDataSource
+    ): SettingsRepositoryInterface {
+        return SettingsRepository(dataSource)
     }
 
     @Provides
