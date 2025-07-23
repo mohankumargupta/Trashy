@@ -10,8 +10,8 @@ data class CollectionInfo (
     val collectionDay: String = "Monday",
     val infoDate: LocalDate = LocalDate.MIN,
     val lastCollectionBinType: BinType = BinType.RECYCLING,
-    val recyclingLidColor: Color = Color.Transparent,
-    val gardenLidColor: Color = Color.Transparent,
+    val recyclingLidColor: ColorSwatch = ColorSwatch.Black,
+    val gardenLidColor: ColorSwatch = ColorSwatch.Black,
 ) {
 
 
@@ -38,7 +38,9 @@ data class CollectionInfo (
         return weeksDelta % 2 == 0L
     }
 
+    fun getHomeRouteParameters() {
 
+    }
 
 
 }

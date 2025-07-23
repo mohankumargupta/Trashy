@@ -30,7 +30,7 @@ import com.melbpc.mohankumargupta.trashy.data.model.BinType
 import com.melbpc.mohankumargupta.trashy.data.model.ColorSwatch
 
 @Composable
-fun BinColor(modifier: Modifier = Modifier, binType: BinType, onClick: (Color) -> Unit) {
+fun BinColor(modifier: Modifier = Modifier, binType: BinType, onClick: (ColorSwatch) -> Unit) {
     val binName = if (binType == BinType.RECYCLING) "Recycling" else "Garden"
     val colors = ColorSwatch.entries.chunked(4)
 
@@ -56,7 +56,7 @@ fun BinColor(modifier: Modifier = Modifier, binType: BinType, onClick: (Color) -
                 items(rowColors) { color ->
                     ColorButton(
                         color = color.toColor(),
-                        onSelectColor = { onClick(color.toColor()) }
+                        onSelectColor = { onClick(color) }
                     )
                 }
             }
