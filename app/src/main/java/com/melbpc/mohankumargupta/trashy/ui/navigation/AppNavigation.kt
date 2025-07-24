@@ -12,8 +12,6 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
-import com.melbpc.mohankumargupta.trashy.data.model.BinType
-import com.melbpc.mohankumargupta.trashy.data.model.ColorSwatch
 import com.melbpc.mohankumargupta.trashy.ui.home.HomeScreen
 import com.melbpc.mohankumargupta.trashy.ui.home.HomeScreenViewModel
 import com.melbpc.mohankumargupta.trashy.ui.onboarding.CollectionDayScreen
@@ -101,7 +99,7 @@ fun AppNavigation(
                 GardenLidScreen(
                     onGardenLidColorChosen = { color ->
                         viewModel.handleFinalOnboardingScreen(ScheduleIntent.GardenLidColor(color))
-                        backStack.add(RouteHome(BinType.RECYCLING, ColorSwatch.Black))
+                        backStack.add(RouteInitialScreen)
                     }
                 )
             }
