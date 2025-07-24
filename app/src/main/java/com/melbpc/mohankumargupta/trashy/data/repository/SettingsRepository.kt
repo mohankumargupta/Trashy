@@ -7,7 +7,7 @@ class SettingsRepository(
     private val dataSource: SettingsDataSource
 ): SettingsRepositoryInterface {
     override suspend fun load(): CollectionInfo {
-        TODO("Not yet implemented")
+        return dataSource.load()
     }
 
     override suspend fun save(settings: CollectionInfo){

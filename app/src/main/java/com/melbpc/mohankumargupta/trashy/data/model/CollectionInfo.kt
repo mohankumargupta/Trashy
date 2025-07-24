@@ -23,7 +23,7 @@ data class CollectionInfo (
         return lastCollectionDate.minusWeeks(weeksBack)
     }
 
-    fun nextBinRecycling(date: LocalDate): Boolean {
+    fun nextBinRecycling(date: LocalDate = LocalDate.now()): Boolean {
         val day = DayOfWeek.valueOf(collectionDay.uppercase())
 
         val nextCollectionDate =
@@ -38,9 +38,7 @@ data class CollectionInfo (
         return weeksDelta % 2 == 0L
     }
 
-    fun getHomeRouteParameters() {
 
-    }
 
 
 }

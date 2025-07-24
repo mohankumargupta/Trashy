@@ -44,29 +44,31 @@ fun AppNavigation(
         entryProvider = entryProvider {
 
             entry<RouteInitialScreen> {
-
-                val isOnboardingComplete by navViewModel.isOnboardingComplete.collectAsStateWithLifecycle()
-                if (isOnboardingComplete) {
-                    val key = navViewModel.getInitialHomeRouteParams()
-                    val viewModel = hiltViewModel<HomeScreenViewModel, HomeScreenViewModel.Factory>(
-                        creationCallback = { factory ->
-                            factory.create(key)
-                        }
-                    )
-                    HomeScreen(
-                        viewModel = viewModel,
-                        onReset = {
-                            backStack.add(RouteOnboardingCollectionDay)
-                        }
-                    )
-                } else {
-                    CollectionDayScreen(
-                        onDayChosen = { day ->
-                            viewModel.handle(ScheduleIntent.DayChosen(day))
-                            backStack.add(RouteOnboardingLastCollectionType)
-                        }
-                    )
-                }
+                val initialRoute by navViewModel.initialRoute.collectAsStateWithLifecycle()
+                backStack.add(initialRoute)
+                backStack.remove(RouteInitialScreen)
+//                val isOnboardingComplete by navViewModel.isOnboardingComplete.collectAsStateWithLifecycle()
+//                if (isOnboardingComplete) {
+//                    val key = navViewModel.getHomeRouteParams()
+//                    val viewModel = hiltViewModel<HomeScreenViewModel, HomeScreenViewModel.Factory>(
+//                        creationCallback = { factory ->
+//                            factory.create(key)
+//                        }
+//                    )
+//                    HomeScreen(
+//                        viewModel = viewModel,
+//                        onReset = {
+//                            backStack.add(RouteOnboardingCollectionDay)
+//                        }
+//                    )
+//                } else {
+//                    CollectionDayScreen(
+//                        onDayChosen = { day ->
+//                            viewModel.handle(ScheduleIntent.DayChosen(day))
+//                            backStack.add(RouteOnboardingLastCollectionType)
+//                        }
+//                    )
+//                }
             }
 
             entry<RouteOnboardingCollectionDay> {
