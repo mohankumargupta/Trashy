@@ -15,7 +15,7 @@ class SettingsRepository(
     }
 
     override suspend fun isOnboardingComplete(): Boolean {
-        return false
+        return !dataSource.isEmpty()
     }
 
 }

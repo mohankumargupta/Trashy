@@ -5,4 +5,6 @@ import com.melbpc.mohankumargupta.trashy.data.model.CollectionInfo
 interface SettingsDataSource {
     suspend fun load(): CollectionInfo?
     suspend fun save(settings: CollectionInfo)
+
+    suspend fun isEmpty(): Boolean
 }

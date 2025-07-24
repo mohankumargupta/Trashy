@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.melbpc.mohankumargupta.trashy.data.model.CollectionInfo
+import kotlinx.coroutines.flow.first
 
 val Context.dataStore by preferencesDataStore("settings")
 
@@ -35,6 +36,10 @@ class SettingsPreferencesDataStore(
             preferences[RECYCLING_LID_COLOR] = settings.recyclingLidColor.name // Store enum name
             preferences[GARDEN_LID_COLOR] = settings.gardenLidColor.name // Store enum name
         }
+    }
+
+    override suspend fun isEmpty(): Boolean {
+        return context.dataStore.data.first().asMap().isEmpty()
     }
 
 }

@@ -9,6 +9,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entry
 import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
@@ -29,6 +30,8 @@ fun AppNavigation(
     navViewModel: NavigationViewModel = hiltViewModel(),
 ) {
     val backStack = remember { mutableStateListOf<NavigationRoute>(RouteInitialScreen) }
+    //val initialRoute by navViewModel.initialRoute.collectAsStateWithLifecycle()
+    //val backStack = rememberNavBackStack(initialRoute)
 
     NavDisplay(
         backStack = backStack,
