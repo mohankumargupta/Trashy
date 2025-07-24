@@ -19,17 +19,9 @@ class NavigationViewModel @Inject constructor(
     private val settingsRepository: SettingsRepositoryInterface
 ) : ViewModel() {
 
-    val isOnboardingComplete: StateFlow<Boolean> = flow<Boolean> {
-        val isOnboardingComplete = settingsRepository.isOnboardingComplete()
-        emit(isOnboardingComplete)
-    }.stateIn(
-        viewModelScope,
-        SharingStarted.Lazily,
-        false,
-    )
-
     val initialRoute = settingsRepository.load().map { collectionInfo ->
-        if (isOnboardingComplete.value) {
+        val isOnboardingComplete = settingsRepository.isOnboardingComplete()
+        if (isOnboardingComplete) {
             val nextCollectionInfo = collectionInfo.nextBinRecycling()
             val nextBin = if (nextCollectionInfo) BinType.RECYCLING else BinType.GARDEN
             val nextLidColor = if (nextBin == BinType.RECYCLING) collectionInfo.recyclingLidColor else collectionInfo.gardenLidColor
