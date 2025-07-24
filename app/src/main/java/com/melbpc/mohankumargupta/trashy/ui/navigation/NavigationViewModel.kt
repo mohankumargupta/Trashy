@@ -1,15 +1,11 @@
 package com.melbpc.mohankumargupta.trashy.ui.navigation
 
-//import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.melbpc.mohankumargupta.trashy.data.model.BinType
-//import com.melbpc.mohankumargupta.trashy.data.model.ColorSwatch
 import com.melbpc.mohankumargupta.trashy.data.repository.SettingsRepositoryInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
