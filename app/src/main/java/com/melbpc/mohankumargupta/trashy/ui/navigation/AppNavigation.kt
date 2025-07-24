@@ -9,7 +9,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entry
 import androidx.navigation3.runtime.entryProvider
-import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
@@ -30,8 +29,6 @@ fun AppNavigation(
     navViewModel: NavigationViewModel = hiltViewModel(),
 ) {
     val backStack = remember { mutableStateListOf<NavigationRoute>(RouteInitialScreen) }
-    //val initialRoute by navViewModel.initialRoute.collectAsStateWithLifecycle()
-    //val backStack = rememberNavBackStack(initialRoute)
 
     NavDisplay(
         backStack = backStack,
@@ -48,11 +45,12 @@ fun AppNavigation(
                 when (initialRoute) {
                     is RouteHome -> {
                         val key = initialRoute as RouteHome
-                        val viewModel = hiltViewModel<HomeScreenViewModel, HomeScreenViewModel.Factory>(
-                            creationCallback = { factory ->
-                                factory.create(key)
-                            }
-                        )
+                        val viewModel =
+                            hiltViewModel<HomeScreenViewModel, HomeScreenViewModel.Factory>(
+                                creationCallback = { factory ->
+                                    factory.create(key)
+                                }
+                            )
                         HomeScreen(
                             viewModel = viewModel,
                             onReset = {
@@ -60,6 +58,7 @@ fun AppNavigation(
                             }
                         )
                     }
+
                     else -> {
                         CollectionDayScreen(
                             onDayChosen = { day ->
@@ -69,25 +68,6 @@ fun AppNavigation(
                         )
                     }
                 }
-//                backStack.add(initialRoute)
-//                backStack.remove(RouteInitialScreen)
-                //val isOnboardingComplete by navViewModel.isOnboardingComplete.collectAsStateWithLifecycle()
-                //if (isOnboardingComplete) {
-//                    val key = navViewModel.getHomeRouteParams()
-//                    val viewModel = hiltViewModel<HomeScreenViewModel, HomeScreenViewModel.Factory>(
-//                        creationCallback = { factory ->
-//                            factory.create(key)
-//                        }
-//                    )
-//                    HomeScreen(
-//                        viewModel = viewModel,
-//                        onReset = {
-//                            backStack.add(RouteOnboardingCollectionDay)
-//                        }
-//                    )
-                //} else {
-
-                //}
             }
 
             entry<RouteOnboardingCollectionDay> {
@@ -138,11 +118,7 @@ fun AppNavigation(
                         backStack.add(RouteOnboardingCollectionDay)
                     }
                 )
-
             }
         }
     )
 }
-
-
-

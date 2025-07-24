@@ -1,13 +1,16 @@
 package com.melbpc.mohankumargupta.trashy.data.datasource
 
 import android.content.Context
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.melbpc.mohankumargupta.trashy.data.model.BinType
 import com.melbpc.mohankumargupta.trashy.data.model.CollectionInfo
 import com.melbpc.mohankumargupta.trashy.data.model.ColorSwatch
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import java.time.LocalDate
 
 val Context.dataStore by preferencesDataStore("settings")
@@ -27,23 +30,27 @@ class SettingsPreferencesDataStore(
             stringPreferencesKey("garden_lid_color") // Storing ColorSwatch enum name as String
     }
 
-    override suspend fun load(): CollectionInfo {
-        val preferences = context.dataStore.data.first()
-        val collectionDay = preferences[COLLECTION_DAY] ?: ""
-        val infoDate = preferences[INFO_DATE]?.let { LocalDate.parse(it) } ?: LocalDate.now()
-        val lastCollectionBinType =
-            preferences[LAST_COLLECTION_BIN_TYPE]?.let { BinType.valueOf(it) } ?: BinType.RECYCLING
-        val recyclingLidColor =
-            preferences[RECYCLING_LID_COLOR]?.let { ColorSwatch.valueOf(it) } ?: ColorSwatch.Black
-        val gardenLidColor =
-            preferences[GARDEN_LID_COLOR]?.let { ColorSwatch.valueOf(it) } ?: ColorSwatch.Black
-        return CollectionInfo(
-            collectionDay = collectionDay,
-            infoDate = infoDate,
-            lastCollectionBinType = lastCollectionBinType,
-            recyclingLidColor = recyclingLidColor,
-            gardenLidColor = gardenLidColor
-        )
+    override fun load(): Flow<CollectionInfo> {
+        return context.dataStore.data.map { preferences ->
+            val collectionDay = preferences[COLLECTION_DAY] ?: ""
+            val infoDate = preferences[INFO_DATE]?.let { LocalDate.parse(it) } ?: LocalDate.now()
+            val lastCollectionBinType =
+                preferences[LAST_COLLECTION_BIN_TYPE]?.let { BinType.valueOf(it) }
+                    ?: BinType.RECYCLING
+            val recyclingLidColor =
+                preferences[RECYCLING_LID_COLOR]?.let { ColorSwatch.valueOf(it) }
+                    ?: ColorSwatch.Black
+            val gardenLidColor =
+                preferences[GARDEN_LID_COLOR]?.let { ColorSwatch.valueOf(it) } ?: ColorSwatch.Black
+
+            CollectionInfo(
+                collectionDay = collectionDay,
+                infoDate = infoDate,
+                lastCollectionBinType = lastCollectionBinType,
+                recyclingLidColor = recyclingLidColor,
+                gardenLidColor = gardenLidColor
+            )
+        }
     }
 
     override suspend fun save(settings: CollectionInfo) {
@@ -58,6 +65,10 @@ class SettingsPreferencesDataStore(
 
     override suspend fun isEmpty(): Boolean {
         return context.dataStore.data.first().asMap().isEmpty()
+    }
+
+    fun datasource(): Flow<Preferences> {
+        return context.dataStore.data
     }
 
 }

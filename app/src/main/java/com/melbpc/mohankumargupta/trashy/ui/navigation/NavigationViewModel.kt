@@ -1,10 +1,10 @@
 package com.melbpc.mohankumargupta.trashy.ui.navigation
 
-import android.util.Log
+//import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.melbpc.mohankumargupta.trashy.data.model.BinType
-import com.melbpc.mohankumargupta.trashy.data.model.ColorSwatch
+//import com.melbpc.mohankumargupta.trashy.data.model.ColorSwatch
 import com.melbpc.mohankumargupta.trashy.data.repository.SettingsRepositoryInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -20,10 +20,7 @@ class NavigationViewModel @Inject constructor(
 ) : ViewModel() {
 
     val isOnboardingComplete: StateFlow<Boolean> = flow<Boolean> {
-        //delay(1)
-        //emit(false)
         val isOnboardingComplete = settingsRepository.isOnboardingComplete()
-        //Log.d("NavigationViewModel", "isOnboardingComplete: $isOnboardingComplete")
         emit(isOnboardingComplete)
     }.stateIn(
         viewModelScope,
@@ -31,15 +28,15 @@ class NavigationViewModel @Inject constructor(
         false,
     )
 
-    val initialRoute: StateFlow<NavigationRoute> = isOnboardingComplete.map { complete ->
-        if (complete) {
-            val recordedCollectionInfo = settingsRepository.load()
-            val nextCollectionInfo = recordedCollectionInfo.nextBinRecycling()
+    val initialRoute = settingsRepository.load().map { collectionInfo ->
+        if (isOnboardingComplete.value) {
+            val nextCollectionInfo = collectionInfo.nextBinRecycling()
             val nextBin = if (nextCollectionInfo) BinType.RECYCLING else BinType.GARDEN
-            val nextLidColor = if (nextBin == BinType.RECYCLING) recordedCollectionInfo.recyclingLidColor else recordedCollectionInfo.gardenLidColor
+            val nextLidColor = if (nextBin == BinType.RECYCLING) collectionInfo.recyclingLidColor else collectionInfo.gardenLidColor
             RouteHome(nextBin, nextLidColor)
-        } else {
-            RouteInitialScreen
+        }
+        else {
+            RouteOnboardingCollectionDay
         }
     }.stateIn(
         scope = viewModelScope,
@@ -47,13 +44,22 @@ class NavigationViewModel @Inject constructor(
         initialValue = RouteOnboardingCollectionDay
     )
 
-    fun getHomeRouteParams(): RouteHome {
-        return RouteHome(BinType.RECYCLING, ColorSwatch.Black)
-    }
+
+//    val initialRoute: StateFlow<NavigationRoute> = isOnboardingComplete.map { complete ->
+//        if (complete) {
+//            val recordedCollectionInfo = settingsRepository.load()
+//            val nextCollectionInfo = recordedCollectionInfo.nextBinRecycling()
+//            val nextBin = if (nextCollectionInfo) BinType.RECYCLING else BinType.GARDEN
+//            val nextLidColor = if (nextBin == BinType.RECYCLING) recordedCollectionInfo.recyclingLidColor else recordedCollectionInfo.gardenLidColor
+//            RouteHome(nextBin, nextLidColor)
+//        } else {
+//            RouteInitialScreen
+//        }
+//    }.stateIn(
+//        scope = viewModelScope,
+//        started = SharingStarted.WhileSubscribed(5000),
+//        initialValue = RouteOnboardingCollectionDay
+//    )
+
 
 }
-
-
-
-
-
