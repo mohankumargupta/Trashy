@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
@@ -64,17 +65,18 @@ fun ResetDialog(
 @Composable
 fun ResetDialogLHS(modifier: Modifier = Modifier, title: String, prompt: String) {
     Column(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
 
     ) {
         Text(
             title,
             modifier = modifier
-                .padding(bottom = 32.dp),
+                .padding(vertical = 54.dp),
             style = MaterialTheme.typography.headlineLarge,
             color = Color.White
         )
-        Text(prompt, style = MaterialTheme.typography.bodyLarge, color = Color.Red)
+        Text(prompt, style = MaterialTheme.typography.headlineMedium, color = Color.Red)
     }
 
 }
