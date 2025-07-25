@@ -104,19 +104,19 @@ fun AppNavigation(
                 )
             }
 
-            entry<RouteHome> { key ->
-                val viewModel = hiltViewModel<HomeScreenViewModel, HomeScreenViewModel.Factory>(
-                    creationCallback = { factory ->
-                        factory.create(key)
-                    }
-                )
-                HomeScreen(
-                    viewModel = viewModel,
-                    onReset = {
-                        backStack.add(RouteOnboardingCollectionDay)
-                    }
-                )
-            }
+//            entry<RouteHome> { key ->
+//                val viewModel = hiltViewModel<HomeScreenViewModel, HomeScreenViewModel.Factory>(
+//                    creationCallback = { factory ->
+//                        factory.create(key)
+//                    }
+//                )
+//                HomeScreen(
+//                    viewModel = viewModel,
+//                    onReset = {
+//                        backStack.add(RouteOnboardingCollectionDay)
+//                    }
+//                )
+//            }
         }
     )
 }

@@ -24,4 +24,3 @@ data object RouteOnboardingGardenLidColor : NavigationRoute
 
 @Serializable
 data class RouteHome(val binType: BinType, val color: ColorSwatch) : NavigationRoute
-
