@@ -20,6 +20,7 @@ import com.melbpc.mohankumargupta.trashy.ui.onboarding.LastCollectionScreen
 import com.melbpc.mohankumargupta.trashy.ui.onboarding.RecyclingLidScreen
 import com.melbpc.mohankumargupta.trashy.ui.onboarding.ScheduleIntent
 import com.melbpc.mohankumargupta.trashy.ui.onboarding.ScheduleViewModel
+import androidx.compose.runtime.collectAsState
 
 @Composable
 fun AppNavigation(
@@ -79,6 +80,7 @@ fun AppNavigation(
 
             entry<RouteOnboardingLastCollectionType> {
                 LastCollectionScreen(
+                    lastCollectionDay = viewModel.uiState.collectAsState().value.collectionDay,
                     onLastCollectionChosen = { collection ->
                         viewModel.handle(ScheduleIntent.LastBinType(collection))
                         backStack.add(RouteOnboardingRecyclingLidColor)
