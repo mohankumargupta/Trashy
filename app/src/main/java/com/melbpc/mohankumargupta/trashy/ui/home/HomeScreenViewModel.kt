@@ -42,5 +42,10 @@ class HomeScreenViewModel @AssistedInject constructor(
     interface Factory {
         fun create(navKey: RouteHome): HomeScreenViewModel
     }
+
+    fun resetSettings() {
+
+    }
+
 }
 

@@ -19,7 +19,6 @@ import androidx.compose.ui.input.key.type
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import com.melbpc.mohankumargupta.trashy.R
-import com.melbpc.mohankumargupta.trashy.ui.components.TwoPaneDialog
 
 @Composable
 fun HomeScreen(
@@ -53,7 +52,6 @@ fun HomeScreen(
                                     showResetDialog = true
                                     true
                                 }
-
                                 else -> false
                             }
                         } else {
@@ -65,9 +63,7 @@ fun HomeScreen(
                 Image(
                     painter = painterResource(id = viewModel.bin),
                     contentDescription = "next collection bin",
-
-                    )
-
+                )
             }
         }
     }
