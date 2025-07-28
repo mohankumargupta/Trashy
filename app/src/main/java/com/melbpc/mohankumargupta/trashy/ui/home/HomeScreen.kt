@@ -1,5 +1,6 @@
 package com.melbpc.mohankumargupta.trashy.ui.home
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Box
@@ -18,14 +19,20 @@ import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Devices.TV_720p
+import androidx.compose.ui.tooling.preview.Preview
 import com.melbpc.mohankumargupta.trashy.R
 
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier,
     viewModel: HomeScreenViewModel,
     onReset: () -> Unit,
 ) {
+    HomeComposable(viewModel.bin, onReset)
+}
+
+@Composable
+fun HomeComposable(@DrawableRes bin:  Int?, onReset: () -> Unit) {
     var showResetDialog by remember { mutableStateOf(false) }
 
     Box {
@@ -38,10 +45,10 @@ fun HomeScreen(
         )
 
         if (showResetDialog) {
-            ResetScreen(modifier = modifier, onReset)
+            ResetScreen(modifier = Modifier, onReset)
         } else {
             Box(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxSize()
                     .focusable()
                     .onKeyEvent { key ->
@@ -52,6 +59,7 @@ fun HomeScreen(
                                     showResetDialog = true
                                     true
                                 }
+
                                 else -> false
                             }
                         } else {
@@ -60,12 +68,34 @@ fun HomeScreen(
                     },
                 contentAlignment = Alignment.Center,
             ) {
-                Image(
-                    painter = painterResource(id = viewModel.bin),
-                    contentDescription = "next collection bin",
-                )
+                bin?.let { nextBin ->
+                    Image(
+                        painter = painterResource(id = nextBin),
+                        contentDescription = "next collection bin",
+                    )
+                }
+
             }
         }
     }
 }
+
+@Preview(device = TV_720p)
+@Composable
+fun HomeLoadingPreview() {
+    HomeComposable(
+        bin = null,
+        onReset = {}
+    )
+}
+
+@Preview(device = TV_720p)
+@Composable
+fun HomePreview() {
+    HomeComposable(
+        bin = R.drawable.recycling_bin_black,
+        onReset = {}
+    )
+}
+
 

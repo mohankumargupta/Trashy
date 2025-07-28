@@ -1,5 +1,6 @@
 package com.melbpc.mohankumargupta.trashy.ui.home
 
+import androidx.annotation.DrawableRes
 import androidx.lifecycle.ViewModel
 import com.melbpc.mohankumargupta.trashy.R
 import com.melbpc.mohankumargupta.trashy.data.model.BinType
@@ -15,8 +16,10 @@ class HomeScreenViewModel @AssistedInject constructor(
   @Assisted val navKey: RouteHome
 ) : ViewModel() {
 
+    @get: DrawableRes
     val bin = binDrawable(navKey.binType, navKey.color)
 
+    @DrawableRes
     private fun binDrawable(bin: BinType, swatch: ColorSwatch): Int = when (bin to swatch) {
         BinType.RECYCLING to ColorSwatch.Black     -> R.drawable.recycling_bin_black
         BinType.RECYCLING to ColorSwatch.DarkGreen -> R.drawable.recycling_bin_darkgreen
