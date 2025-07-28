@@ -30,8 +30,10 @@ class ScheduleViewModel @Inject constructor(
                 }
                 is ScheduleIntent.RecyclingLidColor -> current.copy(recyclingLidColor = intent.color)
                 is ScheduleIntent.LastBinType -> {
-                    current.copy(lastCollectionBinType = intent.type)
-                    current.copy(infoDate = LocalDate.now())
+                    current.copy(
+                        lastCollectionBinType = intent.type,
+                        infoDate = LocalDate.now()
+                        )
                 }
             }
         }

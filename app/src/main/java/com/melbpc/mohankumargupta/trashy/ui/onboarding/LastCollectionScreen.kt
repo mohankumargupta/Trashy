@@ -9,8 +9,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import androidx.tv.material3.WideButton
@@ -20,9 +23,27 @@ import com.melbpc.mohankumargupta.trashy.data.model.BinType
 fun LastCollectionScreen(
     modifier: Modifier = Modifier,
     lastCollectionDay: String? = null,
-    onLastCollectionChosen: (BinType) -> Unit
+    onLastCollectionChosen: () -> Unit,
+    viewModel: ScheduleViewModel = hiltViewModel(
+        LocalContext.current as ViewModelStoreOwner
+    )
 ) {
+    LastCollectionComposable(
+        modifier = modifier,
+        lastCollectionDay = lastCollectionDay,
+        onLastCollectionChosen = { lastCollection->
+            viewModel.handle(ScheduleIntent.LastBinType(lastCollection))
+            onLastCollectionChosen()
+        }
+    )
+}
 
+@Composable
+fun LastCollectionComposable(
+    modifier: Modifier = Modifier,
+    lastCollectionDay: String? = null,
+    onLastCollectionChosen: (BinType) -> Unit,
+) {
     val header = "Last Collection Bin"
     val instructionToday = """
         Need to know what bin collected today.
@@ -36,7 +57,7 @@ fun LastCollectionScreen(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        ) {
+    ) {
         Text(header, style = MaterialTheme.typography.headlineLarge)
         Spacer(modifier = modifier.size(32.dp))
         Text(instruction)
@@ -65,20 +86,22 @@ fun LastCollectionScreen(
 
         }
     }
+
 }
 
 
 @Preview(showBackground = true)
 @Composable
 fun LastCollectionPreview(modifier: Modifier = Modifier) {
-    LastCollectionScreen(
+    LastCollectionComposable(
         onLastCollectionChosen = {})
 }
 
 @Preview(showBackground = true)
 @Composable
 fun CollectionTodayPreview(modifier: Modifier = Modifier) {
-    LastCollectionScreen(
+    LastCollectionComposable(
         lastCollectionDay = "Monday",
-        onLastCollectionChosen = {})
+        onLastCollectionChosen = {}
+    )
 }
