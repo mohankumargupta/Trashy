@@ -1,38 +1,13 @@
 package com.melbpc.mohankumargupta.trashy.ui.navigation
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.melbpc.mohankumargupta.trashy.data.model.BinType
 import com.melbpc.mohankumargupta.trashy.domain.OnboardingRequiredUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
 class NavigationViewModel @Inject constructor(
     onboardingRequiredUseCase: OnboardingRequiredUseCase
 ) : ViewModel() {
-
     val isOnboardingRequired = onboardingRequiredUseCase()
-    /*
-    val initialRoute = settingsRepository.load().map { collectionInfo ->
-        val isOnboardingComplete = settingsRepository.isOnboardingComplete()
-        if (isOnboardingComplete) {
-            val nextCollectionInfo = collectionInfo.nextBinRecycling()
-            val nextBin = if (nextCollectionInfo) BinType.RECYCLING else BinType.GARDEN
-            val nextLidColor =
-                if (nextBin == BinType.RECYCLING) collectionInfo.recyclingLidColor else collectionInfo.gardenLidColor
-            RouteHome(nextBin, nextLidColor)
-        } else {
-            RouteOnboardingCollectionDay
-        }
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = RouteOnboardingCollectionDay
-    )
-     */
-
 }
