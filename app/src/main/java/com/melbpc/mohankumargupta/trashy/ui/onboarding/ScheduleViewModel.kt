@@ -3,9 +3,7 @@ package com.melbpc.mohankumargupta.trashy.ui.onboarding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.melbpc.mohankumargupta.trashy.data.model.CollectionInfo
-import com.melbpc.mohankumargupta.trashy.ui.navigation.RouteOnboardingCollectionDay
 import com.melbpc.mohankumargupta.trashy.data.repository.SettingsRepositoryInterface
-import com.melbpc.mohankumargupta.trashy.ui.navigation.NavigationRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
