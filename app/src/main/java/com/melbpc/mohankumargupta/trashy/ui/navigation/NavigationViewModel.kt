@@ -3,7 +3,7 @@ package com.melbpc.mohankumargupta.trashy.ui.navigation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.melbpc.mohankumargupta.trashy.data.model.BinType
-import com.melbpc.mohankumargupta.trashy.data.repository.SettingsRepositoryInterface
+import com.melbpc.mohankumargupta.trashy.domain.OnboardingRequiredUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -12,9 +12,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NavigationViewModel @Inject constructor(
-    private val settingsRepository: SettingsRepositoryInterface
+    onboardingRequiredUseCase: OnboardingRequiredUseCase
 ) : ViewModel() {
 
+    val isOnboardingRequired = onboardingRequiredUseCase()
+    /*
     val initialRoute = settingsRepository.load().map { collectionInfo ->
         val isOnboardingComplete = settingsRepository.isOnboardingComplete()
         if (isOnboardingComplete) {
@@ -31,5 +33,6 @@ class NavigationViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = RouteOnboardingCollectionDay
     )
+     */
 
 }
