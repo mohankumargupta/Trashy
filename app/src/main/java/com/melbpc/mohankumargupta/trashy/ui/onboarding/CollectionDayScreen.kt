@@ -18,12 +18,25 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import androidx.tv.material3.WideButton
 
 @Composable
-fun CollectionDayScreen(modifier: Modifier = Modifier, onDayChosen: (String) -> Unit) {
+fun CollectionDayScreen(
+    modifier: Modifier = Modifier,
+    onDayChosen: () -> Unit,
+    viewModel: ScheduleViewModel = hiltViewModel()
+) {
+ CollectionDayComposable(onDayChosen={ collectionDay ->
+     viewModel.handle(ScheduleIntent.DayChosen(collectionDay))
+     onDayChosen()
+ })
+}
+
+@Composable
+fun CollectionDayComposable(modifier: Modifier = Modifier, onDayChosen: (String) -> Unit) {
     val days = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
     val firstFocus = remember { FocusRequester() }
     val heading = "Trashy"
@@ -86,5 +99,5 @@ fun CollectionDayScreen(modifier: Modifier = Modifier, onDayChosen: (String) -> 
 @Composable
 @Preview(showBackground = true)
 fun CollectionDayPreview(modifier: Modifier = Modifier) {
-    CollectionDayScreen(modifier = modifier, onDayChosen = {})
+    CollectionDayComposable(modifier = modifier, onDayChosen = {})
 }

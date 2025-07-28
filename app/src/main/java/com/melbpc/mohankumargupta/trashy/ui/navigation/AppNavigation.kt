@@ -40,7 +40,7 @@ fun AppNavigation(
 
             entry<RouteInitialScreen> {
                 val initialRoute by navViewModel.isOnboardingRequired.collectAsStateWithLifecycle(
-                    false
+                    true
                 )
                 if (initialRoute) {
                     HomeScreen(
@@ -50,8 +50,7 @@ fun AppNavigation(
                     )
                 } else {
                     CollectionDayScreen(
-                        onDayChosen = { day ->
-                            viewModel.handle(ScheduleIntent.DayChosen(day))
+                        onDayChosen = {
                             backStack.add(RouteOnboardingLastCollectionType)
                         }
                     )
@@ -60,8 +59,7 @@ fun AppNavigation(
 
             entry<RouteOnboardingCollectionDay> {
                 CollectionDayScreen(
-                    onDayChosen = { day ->
-                        viewModel.handle(ScheduleIntent.DayChosen(day))
+                    onDayChosen = {
                         backStack.add(RouteOnboardingLastCollectionType)
                     }
                 )
