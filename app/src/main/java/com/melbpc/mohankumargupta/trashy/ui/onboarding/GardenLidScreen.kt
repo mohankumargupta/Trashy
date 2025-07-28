@@ -12,10 +12,13 @@ import com.melbpc.mohankumargupta.trashy.ui.components.BinColor
 @Composable
 fun GardenLidScreen(
     modifier: Modifier = Modifier,
-    onGardenLidColorChosen: (ColorSwatch) -> Unit,
+    onGardenLidColorChosen: () -> Unit,
     viewModel: ScheduleViewModel = hiltViewModel(
         LocalContext.current as ViewModelStoreOwner
     )
     ) {
-    BinColor(modifier, binType = BinType.GARDEN, onClick = onGardenLidColorChosen)
+    BinColor(modifier, binType = BinType.GARDEN, onClick = { color ->
+        viewModel.handle(ScheduleIntent.GardenLidColor(color))
+        onGardenLidColorChosen()
+    })
 }

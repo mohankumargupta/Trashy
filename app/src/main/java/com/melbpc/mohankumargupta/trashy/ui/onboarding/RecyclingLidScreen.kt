@@ -12,10 +12,13 @@ import com.melbpc.mohankumargupta.trashy.ui.components.BinColor
 @Composable
 fun RecyclingLidScreen(
     modifier: Modifier = Modifier,
-    onRecyclingLidColorChosen: (ColorSwatch) -> Unit,
+    onRecyclingLidColorChosen: () -> Unit,
     viewModel: ScheduleViewModel = hiltViewModel(
         LocalContext.current as ViewModelStoreOwner
     )
 ) {
-    BinColor(modifier = modifier, binType = BinType.RECYCLING, onClick = onRecyclingLidColorChosen)
+    BinColor(modifier = modifier, binType = BinType.RECYCLING, onClick = { color ->
+        viewModel.handle(ScheduleIntent.RecyclingLidColor(color))
+        onRecyclingLidColorChosen()
+    })
 }

@@ -68,8 +68,7 @@ fun AppNavigation(
             entry<RouteOnboardingLastCollectionType> {
                 LastCollectionScreen(
                     lastCollectionDay = viewModel.uiState.collectAsState().value.collectionDay,
-                    onLastCollectionChosen = { collection ->
-                        viewModel.handle(ScheduleIntent.LastBinType(collection))
+                    onLastCollectionChosen = {
                         backStack.add(RouteOnboardingRecyclingLidColor)
                     }
                 )
@@ -77,8 +76,7 @@ fun AppNavigation(
 
             entry<RouteOnboardingRecyclingLidColor> {
                 RecyclingLidScreen(
-                    onRecyclingLidColorChosen = { color ->
-                        viewModel.handle(ScheduleIntent.RecyclingLidColor(color))
+                    onRecyclingLidColorChosen = {
                         backStack.add(RouteOnboardingGardenLidColor)
                     }
                 )
@@ -86,8 +84,7 @@ fun AppNavigation(
 
             entry<RouteOnboardingGardenLidColor> {
                 GardenLidScreen(
-                    onGardenLidColorChosen = { color ->
-                        viewModel.handleFinalOnboardingScreen(ScheduleIntent.GardenLidColor(color))
+                    onGardenLidColorChosen = {
                         backStack.add(RouteInitialScreen)
                     }
                 )
