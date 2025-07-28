@@ -2,25 +2,54 @@ package com.melbpc.mohankumargupta.trashy.ui.home
 
 import androidx.annotation.DrawableRes
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.melbpc.mohankumargupta.trashy.R
 import com.melbpc.mohankumargupta.trashy.data.model.BinType
 import com.melbpc.mohankumargupta.trashy.data.model.ColorSwatch
-import com.melbpc.mohankumargupta.trashy.ui.navigation.RouteHome
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
+import com.melbpc.mohankumargupta.trashy.data.repository.SettingsRepositoryInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
+//import com.melbpc.mohankumargupta.trashy.ui.navigation.RouteHome
+//import dagger.assisted.Assisted
+//import dagger.assisted.AssistedFactory
+//import dagger.assisted.AssistedInject
+//import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import javax.inject.Inject
 
+/*
 @HiltViewModel(assistedFactory = HomeScreenViewModel.Factory::class)
 class HomeScreenViewModel @AssistedInject constructor(
   @Assisted val navKey: RouteHome
 ) : ViewModel() {
 
-    @get: DrawableRes
-    val bin = binDrawable(navKey.binType, navKey.color)
+ */
+
+@HiltViewModel
+class HomeScreenViewModel @Inject constructor(
+    settingsRepository: SettingsRepositoryInterface
+) : ViewModel() {
+    val collection = settingsRepository.load().map { collectionInfo ->
+        val nextCollectionInfo = collectionInfo.nextBinRecycling()
+        val nextBin = if (nextCollectionInfo) BinType.RECYCLING else BinType.GARDEN
+        val nextLidColor =
+            if (nextBin == BinType.RECYCLING) collectionInfo.recyclingLidColor else collectionInfo.gardenLidColor
+
+        binDrawable(nextBin, nextLidColor)
+
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = null
+    )
+
+
+    //@get: DrawableRes
+    //val bin = binDrawable(navKey.binType, navKey.color)
 
     @DrawableRes
-    private fun binDrawable(bin: BinType, swatch: ColorSwatch): Int = when (bin to swatch) {
+    private fun binDrawable(bin: BinType, lidColor: ColorSwatch): Int? = when (bin to lidColor) {
         BinType.RECYCLING to ColorSwatch.Black     -> R.drawable.recycling_bin_black
         BinType.RECYCLING to ColorSwatch.DarkGreen -> R.drawable.recycling_bin_darkgreen
         BinType.RECYCLING to ColorSwatch.Green     -> R.drawable.recycling_bin_green
@@ -38,9 +67,11 @@ class HomeScreenViewModel @AssistedInject constructor(
         BinType.GARDEN    to ColorSwatch.Yellow    -> R.drawable.garden_bin_yellow
         BinType.GARDEN    to ColorSwatch.Blue      -> R.drawable.garden_bin_blue
         BinType.GARDEN    to ColorSwatch.Purple    -> R.drawable.garden_bin_purple
-        else -> R.drawable.recycling_bin_black
+        else -> null
     }
 
+
+    /*
     @AssistedFactory
     interface Factory {
         fun create(navKey: RouteHome): HomeScreenViewModel
@@ -49,6 +80,8 @@ class HomeScreenViewModel @AssistedInject constructor(
     fun resetSettings() {
 
     }
+    */
+
 
 }
 

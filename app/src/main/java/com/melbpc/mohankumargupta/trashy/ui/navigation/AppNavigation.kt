@@ -43,15 +43,7 @@ fun AppNavigation(
                 val initialRoute by navViewModel.initialRoute.collectAsStateWithLifecycle()
                 when (initialRoute) {
                     is RouteHome -> {
-                        val key = initialRoute as RouteHome
-                        val viewModel =
-                            hiltViewModel<HomeScreenViewModel, HomeScreenViewModel.Factory>(
-                                creationCallback = { factory ->
-                                    factory.create(key)
-                                }
-                            )
                         HomeScreen(
-                            viewModel = viewModel,
                             onReset = {
                                 backStack.add(RouteOnboardingCollectionDay)
                             }

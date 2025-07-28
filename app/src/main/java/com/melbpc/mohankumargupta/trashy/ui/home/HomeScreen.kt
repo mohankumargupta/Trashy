@@ -6,6 +6,7 @@ import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,14 +22,16 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Devices.TV_720p
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.melbpc.mohankumargupta.trashy.R
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeScreenViewModel,
+    viewModel: HomeScreenViewModel = hiltViewModel(),
     onReset: () -> Unit,
 ) {
-    HomeComposable(viewModel.bin, onReset)
+    val nextBin by viewModel.collection.collectAsState()
+    HomeComposable(nextBin, onReset)
 }
 
 @Composable
