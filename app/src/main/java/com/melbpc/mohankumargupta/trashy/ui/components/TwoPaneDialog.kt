@@ -7,21 +7,30 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Devices.TV_1080p
-import androidx.compose.ui.tooling.preview.Devices.TV_720p
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.ListItem
+import androidx.tv.material3.ListItemDefaults
 import androidx.tv.material3.MaterialTheme
+import androidx.tv.material3.Surface
 import androidx.tv.material3.Text
+import androidx.tv.material3.darkColorScheme
 
 @Composable
 fun TwoPaneDialog(
@@ -31,99 +40,122 @@ fun TwoPaneDialog(
     selectedOption: Int = 0,
     onOptionSelected: (Int) -> Unit,
 ) {
+    // A decorative background for the screen
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
-            .padding(
-                top = 192.dp,
-                start = 192.dp,
-                end = 192.dp,
-            )
+            .background(
+                Brush.linearGradient(
+                    colors = listOf(
+                        Color(0xFF000000),
+                        Color(0xFF0A0A0A)
+                    )
+                )
+            ),
+        contentAlignment = Alignment.Center
     ) {
-        Box(
-            modifier = Modifier.fillMaxSize()
+        // The main dialog container with a semi-transparent background and rounded corners
+        Surface(
+            modifier = Modifier
+                .fillMaxHeight(0.6f),
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 72.dp, vertical = 48.dp),
             ) {
                 DialogLHS(
                     modifier = Modifier.weight(1f),
                     title = title,
                     text = text
                 )
+
                 DialogRHS(
-                    modifier = Modifier
-                        .weight(1f),
+                    modifier = Modifier.weight(1f),
                     options = options,
                     selectedOption = selectedOption,
-                    onOptionSelected = onOptionSelected,
+                    onOptionSelected = onOptionSelected
                 )
             }
         }
     }
-
 }
 
+@OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
-fun DialogLHS(modifier: Modifier, title: String, text: String) {
+fun DialogLHS(
+    modifier: Modifier = Modifier,
+    title: String,
+    text: String
+) {
     Column(
-        modifier = modifier.fillMaxHeight(),
+        modifier = modifier
+            .fillMaxHeight()
+            .padding(end = 36.dp), // Add padding to create space between columns
         verticalArrangement = Arrangement.spacedBy(48.dp, Alignment.Top)
     ) {
-        Text(title, style = MaterialTheme.typography.headlineLarge, color = Color.White)
-        Text(text, style = MaterialTheme.typography.bodyLarge, color = Color.White)
+        Text(title, style = MaterialTheme.typography.headlineLarge)
+        Text(text, style = MaterialTheme.typography.bodyLarge)
     }
 }
 
+@OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 fun DialogRHS(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     options: List<String>,
     selectedOption: Int,
-    onOptionSelected: (Int) -> Unit,
+    onOptionSelected: (Int) -> Unit
 ) {
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
+
     LazyColumn(
         modifier = modifier.fillMaxHeight(),
-        verticalArrangement = Arrangement.spacedBy(48.dp, Alignment.Top),
-        ) {
+        verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
+    ) {
         itemsIndexed(options) { index, option ->
+            val isSelected = index == selectedOption
+            val modifierSettings = Modifier.clip(RoundedCornerShape(12.dp))
+
             ListItem(
-                selected = index == selectedOption,
-                headlineContent = {
-                    Text(
-                        option,
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = Color.White
-                    )
+                modifier = if (isSelected) {
+                    modifierSettings.focusRequester(focusRequester)
+                } else {
+                    modifierSettings
                 },
-                onClick = { },
+                selected = isSelected,
+                onClick = { onOptionSelected(index) },
+                headlineContent = { Text(option) },
             )
         }
     }
 }
 
+@OptIn(ExperimentalTvMaterial3Api::class)
 @Preview(
     name = "720p",
-    showBackground = false,
-    backgroundColor = 0xFF000000,
-    device = TV_720p,
+    device = Devices.TV_720p,
     showSystemUi = false
 )
 @Preview(
     name = "1080p",
-    showBackground = false,
-    backgroundColor = 0xFF000000,
-    device = TV_1080p,
+    device = Devices.TV_1080p,
     showSystemUi = false
 )
 @Composable
-fun TwoPaneDialogPreview() {
-    TwoPaneDialog(
-        title = "Reset settings",
-        text = "Are you sure you want to reset settings?",
-        options = listOf("Yes", "No"),
-        selectedOption = 0,
-        onOptionSelected = {}
-    )
+fun TwoPaneDialogPreviewAI() {
+    // Wrap the preview in a TvMaterialTheme for proper component styling
+    MaterialTheme(colorScheme = darkColorScheme()) {
+        TwoPaneDialog(
+            title = "Reset settings",
+            text = "Are you sure you want to reset settings?",
+            options = listOf("Yes", "No"),
+            selectedOption = 0,
+            onOptionSelected = {}
+        )
+    }
 }
