@@ -20,8 +20,8 @@ class ScheduleViewModel @Inject constructor(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(CollectionInfo())
     val uiState: StateFlow<CollectionInfo>  = _uiState
-    private val _navKey = MutableStateFlow<NavigationRoute>(RouteOnboardingCollectionDay)
-    val navKey: StateFlow<NavigationRoute>  = _navKey
+    //private val _navKey = MutableStateFlow<NavigationRoute>(RouteOnboardingCollectionDay)
+    //val navKey: StateFlow<NavigationRoute>  = _navKey
 
     fun handle(intent: ScheduleIntent) {
         _uiState.update { current ->
