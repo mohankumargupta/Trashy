@@ -1,7 +1,6 @@
 package com.melbpc.mohankumargupta.trashy.ui.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
@@ -18,12 +17,9 @@ import com.melbpc.mohankumargupta.trashy.ui.onboarding.CollectionDayScreen
 import com.melbpc.mohankumargupta.trashy.ui.onboarding.GardenLidScreen
 import com.melbpc.mohankumargupta.trashy.ui.onboarding.LastCollectionScreen
 import com.melbpc.mohankumargupta.trashy.ui.onboarding.RecyclingLidScreen
-import com.melbpc.mohankumargupta.trashy.ui.onboarding.ScheduleIntent
-import com.melbpc.mohankumargupta.trashy.ui.onboarding.ScheduleViewModel
 
 @Composable
 fun AppNavigation(
-    viewModel: ScheduleViewModel = hiltViewModel(),
     navViewModel: NavigationViewModel = hiltViewModel(),
 ) {
     val backStack = remember { mutableStateListOf<NavigationRoute>(RouteInitialScreen) }
@@ -40,7 +36,7 @@ fun AppNavigation(
 
             entry<RouteInitialScreen> {
                 val initialRoute by navViewModel.isOnboardingRequired.collectAsStateWithLifecycle(
-                    true
+                    false
                 )
                 if (initialRoute) {
                     HomeScreen(
@@ -67,7 +63,6 @@ fun AppNavigation(
 
             entry<RouteOnboardingLastCollectionType> {
                 LastCollectionScreen(
-                    lastCollectionDay = viewModel.uiState.collectAsState().value.collectionDay,
                     onLastCollectionChosen = {
                         backStack.add(RouteOnboardingRecyclingLidColor)
                     }

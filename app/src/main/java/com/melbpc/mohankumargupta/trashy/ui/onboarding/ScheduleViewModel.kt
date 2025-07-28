@@ -7,6 +7,7 @@ import com.melbpc.mohankumargupta.trashy.data.repository.SettingsRepositoryInter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -16,8 +17,8 @@ import javax.inject.Inject
 class ScheduleViewModel @Inject constructor(
     private val settingsRepository: SettingsRepositoryInterface
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(CollectionInfo())
-    val uiState: StateFlow<CollectionInfo>  = _uiState
+    private val _uiState = MutableStateFlow(CollectionInfo(infoDate = LocalDate.now()))
+    val uiState: StateFlow<CollectionInfo>  = _uiState.asStateFlow()
     //private val _navKey = MutableStateFlow<NavigationRoute>(RouteOnboardingCollectionDay)
     //val navKey: StateFlow<NavigationRoute>  = _navKey
 

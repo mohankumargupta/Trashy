@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -22,16 +23,15 @@ import com.melbpc.mohankumargupta.trashy.data.model.BinType
 @Composable
 fun LastCollectionScreen(
     modifier: Modifier = Modifier,
-    lastCollectionDay: String? = null,
     onLastCollectionChosen: () -> Unit,
-    viewModel: ScheduleViewModel = hiltViewModel(
-        LocalContext.current as ViewModelStoreOwner
-    )
+    viewModel: ScheduleViewModel = hiltViewModel()
 ) {
+    val lastCollectionDay = viewModel.uiState.collectAsState().value.collectionDay
+
     LastCollectionComposable(
         modifier = modifier,
         lastCollectionDay = lastCollectionDay,
-        onLastCollectionChosen = { lastCollection->
+        onLastCollectionChosen = { lastCollection ->
             viewModel.handle(ScheduleIntent.LastBinType(lastCollection))
             onLastCollectionChosen()
         }
@@ -83,23 +83,20 @@ fun LastCollectionComposable(
                 Text("Garden")
             }
 
-
         }
     }
-
 }
-
 
 @Preview(showBackground = true)
 @Composable
-fun LastCollectionPreview(modifier: Modifier = Modifier) {
+fun LastCollectionPreview() {
     LastCollectionComposable(
         onLastCollectionChosen = {})
 }
 
 @Preview(showBackground = true)
 @Composable
-fun CollectionTodayPreview(modifier: Modifier = Modifier) {
+fun CollectionTodayPreview() {
     LastCollectionComposable(
         lastCollectionDay = "Monday",
         onLastCollectionChosen = {}

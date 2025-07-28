@@ -29,9 +29,7 @@ import androidx.tv.material3.WideButton
 fun CollectionDayScreen(
     modifier: Modifier = Modifier,
     onDayChosen: () -> Unit,
-    viewModel: ScheduleViewModel = hiltViewModel(
-        LocalContext.current as ViewModelStoreOwner
-    )
+    viewModel: ScheduleViewModel = hiltViewModel()
 ) {
  CollectionDayComposable(onDayChosen={ collectionDay ->
      viewModel.handle(ScheduleIntent.DayChosen(collectionDay))
