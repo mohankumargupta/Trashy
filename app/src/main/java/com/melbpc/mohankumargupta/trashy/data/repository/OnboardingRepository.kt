@@ -36,7 +36,7 @@ class OnboardingRepository(
         }
     }
 
-    private suspend fun save() {
+    suspend fun save() {
         withContext(Dispatchers.IO) {
             settingsRepository.save(uiState.value)
         }
