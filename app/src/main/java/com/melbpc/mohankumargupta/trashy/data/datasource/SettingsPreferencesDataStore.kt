@@ -32,7 +32,7 @@ class SettingsPreferencesDataStore(
 
     override fun load(): Flow<CollectionInfo> {
         return context.dataStore.data.map { preferences ->
-            val collectionDay = preferences[COLLECTION_DAY] ?: ""
+            val collectionDay = preferences[COLLECTION_DAY] ?: DayOfWeek.MONDAY.name
             val infoDate = preferences[INFO_DATE]?.let { LocalDate.parse(it) } ?: LocalDate.now()
             val lastCollectionBinType =
                 preferences[LAST_COLLECTION_BIN_TYPE]?.let { BinType.valueOf(it) }

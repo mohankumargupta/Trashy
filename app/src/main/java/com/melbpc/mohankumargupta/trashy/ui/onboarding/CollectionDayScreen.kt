@@ -24,11 +24,9 @@ fun CollectionDayComposable(onDayChosen: (String) -> Unit) {
     val days = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
     val heading = "Welcome to Trashy"
     val blurb = """
-        Welcome to Trashy, an app that helps you track your next bin 
-        collection.
+        Trashy will tell your next bin collection.
                
-        First, choose your collection day from the
-        days of the week on the right.
+        Choose your collection day.
     """.trimIndent()
 
     TwoPaneDialog(
