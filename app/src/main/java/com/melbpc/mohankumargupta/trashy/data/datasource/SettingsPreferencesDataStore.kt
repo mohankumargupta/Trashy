@@ -67,8 +67,15 @@ class SettingsPreferencesDataStore(
         return context.dataStore.data.first().asMap().isEmpty()
     }
 
+    override suspend fun reset() {
+        context.dataStore.edit { preferences ->
+            preferences.clear()
+        }
+    }
+
+    /*
     fun datasource(): Flow<Preferences> {
         return context.dataStore.data
     }
-
+    */
 }

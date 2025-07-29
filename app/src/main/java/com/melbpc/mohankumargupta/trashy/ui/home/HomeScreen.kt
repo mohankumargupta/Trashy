@@ -31,7 +31,10 @@ fun HomeScreen(
     onReset: () -> Unit,
 ) {
     val nextBin by viewModel.collection.collectAsState()
-    HomeComposable(nextBin, onReset)
+    HomeComposable(nextBin, {
+        viewModel.resetSettings()
+        onReset()
+    })
 }
 
 @Composable
@@ -48,22 +51,28 @@ fun HomeComposable(@DrawableRes bin:  Int?, onReset: () -> Unit) {
         )
 
         if (showResetDialog) {
-            ResetScreen(modifier = Modifier, onReset)
+            ResetScreen(
+                modifier = Modifier,
+                onConfirm = onReset,
+                onCancel = { showResetDialog = false }
+            )
         } else {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .focusable()
                     .onKeyEvent { key ->
-                        if (key.type == KeyEventType.KeyUp) {
+                        return@onKeyEvent if (key.type == KeyEventType.KeyUp) {
                             when (key.key) {
                                 Key.DirectionCenter, Key.Enter -> {
-                                    //onReset()
                                     showResetDialog = true
                                     true
                                 }
 
-                                else -> false
+                                else -> {
+                                    showResetDialog = false
+                                    true
+                                }
                             }
                         } else {
                             false

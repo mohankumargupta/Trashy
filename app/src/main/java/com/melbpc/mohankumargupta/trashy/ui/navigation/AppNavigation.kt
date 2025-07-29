@@ -41,7 +41,8 @@ fun AppNavigation(
                 if (initialRoute) {
                     HomeScreen(
                         onReset = {
-                            backStack.add(RouteOnboardingCollectionDay)
+                            //backStack.add(RouteOnboardingCollectionDay)
+                            //backStack.add(RouteInitialScreen)
                         }
                     )
                 } else {

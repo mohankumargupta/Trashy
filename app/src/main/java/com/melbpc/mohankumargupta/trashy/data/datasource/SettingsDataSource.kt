@@ -8,4 +8,6 @@ interface SettingsDataSource {
     suspend fun save(settings: CollectionInfo)
 
     suspend fun isEmpty(): Boolean
+
+    suspend fun reset()
 }

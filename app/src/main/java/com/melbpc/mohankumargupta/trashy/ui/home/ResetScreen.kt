@@ -6,7 +6,7 @@ import com.melbpc.mohankumargupta.trashy.ui.components.ResetDialog
 import com.melbpc.mohankumargupta.trashy.ui.components.TwoPaneDialog
 
 @Composable
-fun ResetScreen(modifier: Modifier = Modifier, onReset: () -> Unit) {
+fun ResetScreen(modifier: Modifier = Modifier, onConfirm: () -> Unit, onCancel: () -> Unit) {
     TwoPaneDialog(
         title = "Reset settings",
         text = "Are you sure you want to reset settings?",
@@ -14,7 +14,11 @@ fun ResetScreen(modifier: Modifier = Modifier, onReset: () -> Unit) {
         selectedOption = 1,
         onOptionSelected = { selectedOption ->
             if (selectedOption == 0) {
-                onReset()
+                onConfirm()
+            }
+
+            else {
+                onCancel()
             }
         }
     )

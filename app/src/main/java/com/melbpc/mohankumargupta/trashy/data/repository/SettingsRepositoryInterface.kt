@@ -8,5 +8,7 @@ interface SettingsRepositoryInterface {
     suspend fun save(settings: CollectionInfo)
 
     suspend fun isOnboardingComplete(): Boolean
+
+    suspend fun reset()
 }
 

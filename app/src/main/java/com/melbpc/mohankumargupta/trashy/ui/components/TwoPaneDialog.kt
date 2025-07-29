@@ -26,7 +26,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.ListItem
-import androidx.tv.material3.ListItemDefaults
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Surface
 import androidx.tv.material3.Text
@@ -40,7 +39,7 @@ fun TwoPaneDialog(
     selectedOption: Int = 0,
     onOptionSelected: (Int) -> Unit,
 ) {
-    // A decorative background for the screen
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -54,7 +53,6 @@ fun TwoPaneDialog(
             ),
         contentAlignment = Alignment.Center
     ) {
-        // The main dialog container with a semi-transparent background and rounded corners
         Surface(
             modifier = Modifier
                 .fillMaxHeight(0.6f),

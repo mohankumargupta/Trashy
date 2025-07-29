@@ -38,9 +38,9 @@ class OnboardingRepository @Inject constructor(
     }
 
     suspend fun save() {
-        withContext(Dispatchers.IO) {
+        //withContext(Dispatchers.IO) {
             settingsRepository.save(uiState.value)
-        }
+        //}
     }
 
 }

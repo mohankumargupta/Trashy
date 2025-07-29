@@ -19,4 +19,9 @@ class SettingsRepository(
         return !dataSource.isEmpty()
     }
 
+    override suspend fun reset() {
+        dataSource.reset()
+
+    }
+
 }

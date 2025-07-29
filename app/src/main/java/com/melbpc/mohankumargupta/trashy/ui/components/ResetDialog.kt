@@ -72,7 +72,6 @@ fun ResetDialogLHS(modifier: Modifier = Modifier, title: String, prompt: String)
     Column(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
-
         ) {
         Text(
             title,
@@ -83,7 +82,6 @@ fun ResetDialogLHS(modifier: Modifier = Modifier, title: String, prompt: String)
         )
         Text(prompt, style = MaterialTheme.typography.headlineMedium, color = Color.Red)
     }
-
 }
 
 @Composable
@@ -124,7 +122,6 @@ fun ResetDialogRHS(
                 style = MaterialTheme.typography.bodyLarge,
                 color = Color.Green,
             )
-
         }
     }
 }
