@@ -9,6 +9,7 @@ import androidx.tv.material3.ExperimentalTvMaterial3Api
 import com.melbpc.mohankumargupta.trashy.data.model.BinType
 import com.melbpc.mohankumargupta.trashy.ui.components.TwoPaneDialog
 import com.melbpc.mohankumargupta.trashy.ui.theme.TrashyTheme
+import java.time.DayOfWeek
 import java.time.LocalDate
 
 @Composable
@@ -19,7 +20,7 @@ fun LastCollectionScreen(
     val lastCollectionDay = viewModel.uiState.collectAsState().value.collectionDay
     val today = LocalDate.now().dayOfWeek
 
-    val isCollectionDayToday = lastCollectionDay.uppercase() == today.name
+    val isCollectionDayToday = lastCollectionDay == today
 
     LastCollectionComposable(
         lastCollectionDay = lastCollectionDay,
@@ -32,7 +33,7 @@ fun LastCollectionScreen(
 
 @Composable
 fun LastCollectionComposable(
-    lastCollectionDay: String? = null,
+    lastCollectionDay: DayOfWeek? = null,
     onLastCollectionChosen: (BinType) -> Unit,
     isCollectionDayToday: Boolean = false,
 ) {
@@ -64,7 +65,7 @@ fun LastCollectionComposable(
 fun LastCollectionPreview() {
     TrashyTheme(isInDarkTheme = true) {
         LastCollectionComposable(
-            lastCollectionDay = "Monday",
+            lastCollectionDay = DayOfWeek.MONDAY,
             isCollectionDayToday = false,
             onLastCollectionChosen = {},
         )
@@ -80,7 +81,7 @@ fun LastCollectionPreview() {
 fun CollectionTodayPreview() {
     TrashyTheme(isInDarkTheme = true) {
         LastCollectionComposable(
-            lastCollectionDay = "Tuesday",
+            lastCollectionDay = DayOfWeek.MONDAY,
             isCollectionDayToday = true,
             onLastCollectionChosen = {},
         )

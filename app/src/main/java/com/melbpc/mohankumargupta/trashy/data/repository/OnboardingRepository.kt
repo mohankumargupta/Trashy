@@ -1,15 +1,12 @@
 package com.melbpc.mohankumargupta.trashy.data.repository
 
-import androidx.lifecycle.viewModelScope
 import com.melbpc.mohankumargupta.trashy.data.model.CollectionInfo
 import com.melbpc.mohankumargupta.trashy.ui.onboarding.ScheduleIntent
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import java.time.DayOfWeek
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -22,7 +19,7 @@ class OnboardingRepository @Inject constructor(
     fun handle(intent: ScheduleIntent) {
         _uiState.update { current ->
             when (intent) {
-                is ScheduleIntent.DayChosen -> current.copy(collectionDay = intent.day)
+                is ScheduleIntent.DayChosen -> current.copy(collectionDay = DayOfWeek.valueOf(intent.day))
                 is ScheduleIntent.GardenLidColor -> {
                     current.copy(gardenLidColor = intent.color)
                 }

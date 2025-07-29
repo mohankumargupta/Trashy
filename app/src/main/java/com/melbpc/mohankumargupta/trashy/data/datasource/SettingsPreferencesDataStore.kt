@@ -1,7 +1,6 @@
 package com.melbpc.mohankumargupta.trashy.data.datasource
 
 import android.content.Context
-import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -11,6 +10,7 @@ import com.melbpc.mohankumargupta.trashy.data.model.ColorSwatch
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import java.time.DayOfWeek
 import java.time.LocalDate
 
 val Context.dataStore by preferencesDataStore("settings")
@@ -44,7 +44,7 @@ class SettingsPreferencesDataStore(
                 preferences[GARDEN_LID_COLOR]?.let { ColorSwatch.valueOf(it) } ?: ColorSwatch.Black
 
             CollectionInfo(
-                collectionDay = collectionDay,
+                collectionDay = DayOfWeek.valueOf(collectionDay),
                 infoDate = infoDate,
                 lastCollectionBinType = lastCollectionBinType,
                 recyclingLidColor = recyclingLidColor,
@@ -55,9 +55,11 @@ class SettingsPreferencesDataStore(
 
     override suspend fun save(settings: CollectionInfo) {
         context.dataStore.edit { preferences ->
-            preferences[COLLECTION_DAY] = settings.collectionDay
-            preferences[INFO_DATE] = settings.infoDate.toString() // Store LocalDate as ISO-8601 string
-            preferences[LAST_COLLECTION_BIN_TYPE] = settings.lastCollectionBinType.name // Store enum name
+            preferences[COLLECTION_DAY] = settings.collectionDay.name
+            preferences[INFO_DATE] =
+                settings.infoDate.toString() // Store LocalDate as ISO-8601 string
+            preferences[LAST_COLLECTION_BIN_TYPE] =
+                settings.lastCollectionBinType.name // Store enum name
             preferences[RECYCLING_LID_COLOR] = settings.recyclingLidColor.name // Store enum name
             preferences[GARDEN_LID_COLOR] = settings.gardenLidColor.name // Store enum name
         }
