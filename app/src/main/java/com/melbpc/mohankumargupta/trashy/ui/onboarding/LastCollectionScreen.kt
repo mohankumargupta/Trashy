@@ -1,27 +1,18 @@
 package com.melbpc.mohankumargupta.trashy.ui.onboarding
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.tv.material3.MaterialTheme
-import androidx.tv.material3.Text
-import androidx.tv.material3.WideButton
+import androidx.tv.material3.ExperimentalTvMaterial3Api
 import com.melbpc.mohankumargupta.trashy.data.model.BinType
+import com.melbpc.mohankumargupta.trashy.ui.components.TwoPaneDialog
+import com.melbpc.mohankumargupta.trashy.ui.theme.TrashyTheme
 import java.time.LocalDate
 
 @Composable
 fun LastCollectionScreen(
-    modifier: Modifier = Modifier,
     onLastCollectionChosen: () -> Unit,
     viewModel: ScheduleViewModel = hiltViewModel()
 ) {
@@ -31,19 +22,16 @@ fun LastCollectionScreen(
     val isCollectionDayToday = lastCollectionDay.uppercase() == today.name
 
     LastCollectionComposable(
-        modifier = modifier,
         lastCollectionDay = lastCollectionDay,
         isCollectionDayToday = isCollectionDayToday,
         onLastCollectionChosen = { lastCollection ->
             viewModel.handle(ScheduleIntent.LastBinType(lastCollection))
             onLastCollectionChosen()
-        }
-    )
+        })
 }
 
 @Composable
 fun LastCollectionComposable(
-    modifier: Modifier = Modifier,
     lastCollectionDay: String? = null,
     onLastCollectionChosen: (BinType) -> Unit,
     isCollectionDayToday: Boolean = false,
@@ -55,58 +43,46 @@ fun LastCollectionComposable(
     val instructionLastCollection = """
         Need to know what bin was last collected last $lastCollectionDay.
     """.trimIndent()
-    val instruction = if (isCollectionDayToday) instructionToday else  instructionLastCollection
+    val instruction = if (isCollectionDayToday) instructionToday else instructionLastCollection
 
-    Column(
-        modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-    ) {
-        Text(header, style = MaterialTheme.typography.headlineLarge)
-        Spacer(modifier = modifier.size(32.dp))
-        Text(instruction)
-        Spacer(modifier = modifier.size(64.dp))
-        Row(
-            modifier = modifier, horizontalArrangement = Arrangement.spacedBy(64.dp)
-        ) {
-            WideButton(
-                modifier = modifier,
-                onClick = {
-                    onLastCollectionChosen(BinType.RECYCLING)
-                },
-            ) {
-                Text("Recycling")
-            }
-
-            WideButton(
-                modifier = modifier,
-                onClick = {
-                    onLastCollectionChosen(BinType.GARDEN)
-                },
-            ) {
-                Text("Garden")
-            }
-
+    TwoPaneDialog(
+        title = header,
+        text = instruction,
+        options = listOf("Recycling", "Garden"),
+        onOptionSelected = { binType ->
+            onLastCollectionChosen(BinType.entries[binType])
         }
+    )
+}
+
+@Composable
+@OptIn(ExperimentalTvMaterial3Api::class)
+@Preview(
+    name = "720p",
+    device = Devices.TV_720p,
+)
+fun LastCollectionPreview() {
+    TrashyTheme(isInDarkTheme = true) {
+        LastCollectionComposable(
+            lastCollectionDay = "Monday",
+            isCollectionDayToday = false,
+            onLastCollectionChosen = {},
+        )
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun LastCollectionPreview() {
-    LastCollectionComposable(
-        lastCollectionDay = "Monday",
-        isCollectionDayToday = false,
-        onLastCollectionChosen = {},
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
+@OptIn(ExperimentalTvMaterial3Api::class)
+@Preview(
+    name = "720p",
+    device = Devices.TV_720p,
+)
 fun CollectionTodayPreview() {
-    LastCollectionComposable(
-        lastCollectionDay = "Tuesday",
-        isCollectionDayToday = true,
-        onLastCollectionChosen = {},
-    )
+    TrashyTheme(isInDarkTheme = true) {
+        LastCollectionComposable(
+            lastCollectionDay = "Tuesday",
+            isCollectionDayToday = true,
+            onLastCollectionChosen = {},
+        )
+    }
 }

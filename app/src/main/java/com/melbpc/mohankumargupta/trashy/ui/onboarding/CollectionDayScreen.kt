@@ -41,7 +41,6 @@ fun CollectionDayComposable(onDayChosen: (String) -> Unit) {
     )
 }
 
-
 @Composable
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Preview(
