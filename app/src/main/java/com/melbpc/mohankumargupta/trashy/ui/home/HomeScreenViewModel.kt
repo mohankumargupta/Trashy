@@ -23,7 +23,13 @@ import javax.inject.Inject
 class HomeScreenViewModel @Inject constructor(
     private val settingsRepository: SettingsRepositoryInterface
 ) : ViewModel() {
+    val currentSettings = settingsRepository.load()
+
     val collection = settingsRepository.load().map { collectionInfo ->
+        val isOnboardingComplete = settingsRepository.isOnboardingComplete()
+        if (!isOnboardingComplete) {
+            return@map R.drawable.recycling_bin_black
+        }
         val nextCollectionInfo = collectionInfo.nextBinRecycling()
         val nextBin = if (nextCollectionInfo) BinType.RECYCLING else BinType.GARDEN
         val nextLidColor =
