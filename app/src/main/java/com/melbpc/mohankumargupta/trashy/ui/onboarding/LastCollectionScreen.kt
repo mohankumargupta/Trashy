@@ -10,15 +10,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import androidx.tv.material3.WideButton
 import com.melbpc.mohankumargupta.trashy.data.model.BinType
+import java.time.DayOfWeek
+import java.time.LocalDate
 
 @Composable
 fun LastCollectionScreen(
@@ -27,10 +27,12 @@ fun LastCollectionScreen(
     viewModel: ScheduleViewModel = hiltViewModel()
 ) {
     val lastCollectionDay = viewModel.uiState.collectAsState().value.collectionDay
+    val today = LocalDate.now().dayOfWeek
 
     LastCollectionComposable(
         modifier = modifier,
         lastCollectionDay = lastCollectionDay,
+        today = today,
         onLastCollectionChosen = { lastCollection ->
             viewModel.handle(ScheduleIntent.LastBinType(lastCollection))
             onLastCollectionChosen()
@@ -43,6 +45,7 @@ fun LastCollectionComposable(
     modifier: Modifier = Modifier,
     lastCollectionDay: String? = null,
     onLastCollectionChosen: (BinType) -> Unit,
+    today: DayOfWeek,
 ) {
     val header = "Last Collection Bin"
     val instructionToday = """
@@ -51,7 +54,7 @@ fun LastCollectionComposable(
     val instructionLastCollection = """
         Need to know what bin was last collected last $lastCollectionDay.
     """.trimIndent()
-    val instruction = if (lastCollectionDay != null) instructionLastCollection else instructionToday
+    val instruction = if (lastCollectionDay?.uppercase() == today.name) instructionLastCollection else instructionToday
 
     Column(
         modifier = modifier.fillMaxSize(),
@@ -91,7 +94,10 @@ fun LastCollectionComposable(
 @Composable
 fun LastCollectionPreview() {
     LastCollectionComposable(
-        onLastCollectionChosen = {})
+        lastCollectionDay = "Tuesday",
+        today = DayOfWeek.MONDAY,
+        onLastCollectionChosen = {},
+    )
 }
 
 @Preview(showBackground = true)
@@ -99,6 +105,7 @@ fun LastCollectionPreview() {
 fun CollectionTodayPreview() {
     LastCollectionComposable(
         lastCollectionDay = "Monday",
-        onLastCollectionChosen = {}
+        today = DayOfWeek.MONDAY,
+        onLastCollectionChosen = {},
     )
 }

@@ -28,7 +28,6 @@ class ScheduleViewModel @Inject constructor(
 
     fun handle(intent: ScheduleIntent) {
         onboardingRepository.handle(intent)
-        save()
     }
 
     fun save() {
