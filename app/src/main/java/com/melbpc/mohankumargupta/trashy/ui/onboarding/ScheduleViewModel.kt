@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ScheduleViewModel @Inject constructor(
-    private val onboardingRepository: OnboardingRepository
+    val onboardingRepository: OnboardingRepository
 ) : ViewModel() {
 
 //    private val _uiState = MutableStateFlow(CollectionInfo(infoDate = LocalDate.now()))

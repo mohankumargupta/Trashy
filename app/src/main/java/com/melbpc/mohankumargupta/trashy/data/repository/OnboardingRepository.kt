@@ -11,9 +11,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
+import javax.inject.Inject
 
-class OnboardingRepository(
-    private val settingsRepository: SettingsRepositoryInterface,
+class OnboardingRepository @Inject constructor(
+    val settingsRepository: SettingsRepositoryInterface,
 ) {
     private val _uiState = MutableStateFlow(CollectionInfo(infoDate = LocalDate.now()))
     val uiState: StateFlow<CollectionInfo>  = _uiState.asStateFlow()
