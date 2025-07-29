@@ -17,7 +17,6 @@ import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import androidx.tv.material3.WideButton
 import com.melbpc.mohankumargupta.trashy.data.model.BinType
-import java.time.DayOfWeek
 import java.time.LocalDate
 
 @Composable
@@ -29,10 +28,12 @@ fun LastCollectionScreen(
     val lastCollectionDay = viewModel.uiState.collectAsState().value.collectionDay
     val today = LocalDate.now().dayOfWeek
 
+    val isCollectionDayToday = lastCollectionDay.uppercase() == today.name
+
     LastCollectionComposable(
         modifier = modifier,
         lastCollectionDay = lastCollectionDay,
-        today = today,
+        isCollectionDayToday = isCollectionDayToday,
         onLastCollectionChosen = { lastCollection ->
             viewModel.handle(ScheduleIntent.LastBinType(lastCollection))
             onLastCollectionChosen()
@@ -45,7 +46,7 @@ fun LastCollectionComposable(
     modifier: Modifier = Modifier,
     lastCollectionDay: String? = null,
     onLastCollectionChosen: (BinType) -> Unit,
-    today: DayOfWeek,
+    isCollectionDayToday: Boolean = false,
 ) {
     val header = "Last Collection Bin"
     val instructionToday = """
@@ -54,7 +55,7 @@ fun LastCollectionComposable(
     val instructionLastCollection = """
         Need to know what bin was last collected last $lastCollectionDay.
     """.trimIndent()
-    val instruction = if (lastCollectionDay?.uppercase() == today.name) instructionLastCollection else instructionToday
+    val instruction = if (isCollectionDayToday) instructionToday else  instructionLastCollection
 
     Column(
         modifier = modifier.fillMaxSize(),
@@ -94,8 +95,8 @@ fun LastCollectionComposable(
 @Composable
 fun LastCollectionPreview() {
     LastCollectionComposable(
-        lastCollectionDay = "Tuesday",
-        today = DayOfWeek.MONDAY,
+        lastCollectionDay = "Monday",
+        isCollectionDayToday = false,
         onLastCollectionChosen = {},
     )
 }
@@ -104,8 +105,8 @@ fun LastCollectionPreview() {
 @Composable
 fun CollectionTodayPreview() {
     LastCollectionComposable(
-        lastCollectionDay = "Monday",
-        today = DayOfWeek.MONDAY,
+        lastCollectionDay = "Tuesday",
+        isCollectionDayToday = true,
         onLastCollectionChosen = {},
     )
 }
