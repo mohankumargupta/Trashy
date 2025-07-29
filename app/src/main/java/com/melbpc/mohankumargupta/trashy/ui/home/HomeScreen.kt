@@ -31,7 +31,7 @@ fun HomeScreen(
     onReset: () -> Unit,
 ) {
     val nextBin by viewModel.collection.collectAsState()
-    HomeComposable(nextBin, {
+    HomeComposable(nextBin, onReset = {
         viewModel.resetSettings()
         onReset()
     })
@@ -54,7 +54,9 @@ fun HomeComposable(@DrawableRes bin:  Int?, onReset: () -> Unit) {
             ResetScreen(
                 modifier = Modifier,
                 onConfirm = onReset,
-                onCancel = { showResetDialog = false }
+                onCancel = {
+                    showResetDialog = false
+                }
             )
         } else {
             Box(

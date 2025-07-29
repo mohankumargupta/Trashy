@@ -19,14 +19,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-/*
-@HiltViewModel(assistedFactory = HomeScreenViewModel.Factory::class)
-class HomeScreenViewModel @AssistedInject constructor(
-  @Assisted val navKey: RouteHome
-) : ViewModel() {
-
- */
-
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
     private val settingsRepository: SettingsRepositoryInterface
