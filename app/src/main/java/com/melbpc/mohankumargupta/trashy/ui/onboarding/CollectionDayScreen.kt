@@ -1,47 +1,32 @@
 package com.melbpc.mohankumargupta.trashy.ui.onboarding
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.tv.material3.MaterialTheme
-import androidx.tv.material3.Text
-import androidx.tv.material3.WideButton
+import androidx.tv.material3.ExperimentalTvMaterial3Api
+import com.melbpc.mohankumargupta.trashy.ui.components.TwoPaneDialog
+import com.melbpc.mohankumargupta.trashy.ui.theme.TrashyTheme
 
 @Composable
 fun CollectionDayScreen(
-    modifier: Modifier = Modifier,
     onDayChosen: () -> Unit,
     viewModel: ScheduleViewModel = hiltViewModel()
 ) {
- CollectionDayComposable(onDayChosen={ collectionDay ->
-     viewModel.handle(ScheduleIntent.DayChosen(collectionDay))
-     onDayChosen()
- })
+    CollectionDayComposable(onDayChosen = { collectionDay ->
+        viewModel.handle(ScheduleIntent.DayChosen(collectionDay))
+        onDayChosen()
+    })
 }
 
 @Composable
 fun CollectionDayComposable(modifier: Modifier = Modifier, onDayChosen: (String) -> Unit) {
     val days = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
     val firstFocus = remember { FocusRequester() }
-    val heading = "Trashy"
+    val heading = "Welcome to Trashy"
     val blurb = """
         Welcome to Trashy, an app that helps you track your next bin 
         collection.
@@ -49,6 +34,17 @@ fun CollectionDayComposable(modifier: Modifier = Modifier, onDayChosen: (String)
         First, choose your collection day from the
         days of the week on the right.
     """.trimIndent()
+
+    TwoPaneDialog(
+        title = heading,
+        text = blurb,
+        options = days,
+        onOptionSelected = { index ->
+            onDayChosen(days[index])
+        }
+    )
+
+    /*
 
     LaunchedEffect(Unit) {
         firstFocus.requestFocus()
@@ -96,10 +92,19 @@ fun CollectionDayComposable(modifier: Modifier = Modifier, onDayChosen: (String)
             }
         }
     }
+
+     */
 }
 
+
 @Composable
-@Preview(showBackground = true)
+@OptIn(ExperimentalTvMaterial3Api::class)
+@Preview(
+    name = "720p",
+    device = Devices.TV_720p,
+)
 fun CollectionDayPreview(modifier: Modifier = Modifier) {
-    CollectionDayComposable(modifier = modifier, onDayChosen = {})
+    TrashyTheme(isInDarkTheme = true) {
+        CollectionDayComposable(modifier = modifier, onDayChosen = {})
+    }
 }
