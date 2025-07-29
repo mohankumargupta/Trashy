@@ -26,7 +26,7 @@ class ScheduleViewModel @Inject constructor(
 
     val uiState = onboardingRepository.uiState
 
-    fun handleFinalOnboardingScreen(intent: ScheduleIntent) {
+    fun handle(intent: ScheduleIntent) {
         onboardingRepository.handle(intent)
         save()
     }
