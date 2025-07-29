@@ -28,6 +28,9 @@ class ScheduleViewModel @Inject constructor(
 
     fun handle(intent: ScheduleIntent) {
         onboardingRepository.handle(intent)
+        if (intent is ScheduleIntent.GardenLidColor) {
+            save()
+        }
     }
 
     fun save() {
