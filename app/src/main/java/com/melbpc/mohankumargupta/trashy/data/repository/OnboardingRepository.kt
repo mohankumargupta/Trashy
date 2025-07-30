@@ -19,7 +19,7 @@ class OnboardingRepository @Inject constructor(
     fun handle(intent: ScheduleIntent) {
         _uiState.update { current ->
             when (intent) {
-                is ScheduleIntent.DayChosen -> current.copy(collectionDay = DayOfWeek.valueOf(intent.day))
+                is ScheduleIntent.DayChosen -> current.copy(collectionDay = DayOfWeek.valueOf(intent.day.uppercase()))
                 is ScheduleIntent.GardenLidColor -> {
                     current.copy(gardenLidColor = intent.color)
                 }
