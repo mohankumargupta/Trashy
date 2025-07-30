@@ -74,10 +74,4 @@ class SettingsPreferencesDataStore(
             preferences.clear()
         }
     }
-
-    /*
-    fun datasource(): Flow<Preferences> {
-        return context.dataStore.data
-    }
-    */
 }

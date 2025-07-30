@@ -40,14 +40,14 @@ fun BinColor(modifier: Modifier = Modifier, binType: BinType, onClick: (ColorSwa
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-       item {
-           Text(
-               text = "Pick color for $binName bin",
-               color = Color.White,
-               style = MaterialTheme.typography.headlineLarge,
-               modifier = Modifier.padding(bottom = 36.dp)
-           )
-       }
+        item {
+            Text(
+                text = "Pick color for $binName bin",
+                color = Color.White,
+                style = MaterialTheme.typography.headlineLarge,
+                modifier = Modifier.padding(bottom = 36.dp)
+            )
+        }
 
         items(colors) { rowColors ->
             LazyRow(
@@ -60,10 +60,8 @@ fun BinColor(modifier: Modifier = Modifier, binType: BinType, onClick: (ColorSwa
                     )
                 }
             }
-
         }
     }
-
 }
 
 @Composable
@@ -81,8 +79,7 @@ fun ColorButton(
                 isFocused = focusState.isFocused
             }
             .padding(12.dp)
-            .size(50.dp)
-        ,
+            .size(50.dp),
         shape = ButtonDefaults.shape(CircleShape),
         border = ButtonDefaults.border(
             Border(
@@ -109,7 +106,5 @@ fun ColorButton(
 @Composable
 @Preview(showBackground = true)
 fun BinColorPreview(modifier: Modifier = Modifier) {
-  BinColor(modifier = modifier, binType = BinType.RECYCLING, onClick = {})
+    BinColor(modifier = modifier, binType = BinType.RECYCLING, onClick = {})
 }
-
-

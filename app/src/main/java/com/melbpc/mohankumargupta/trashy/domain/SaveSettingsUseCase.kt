@@ -16,4 +16,3 @@ class SaveSettingsUseCase @Inject constructor(
         }
     }
 }
-

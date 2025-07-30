@@ -44,9 +44,7 @@ fun ResetDialog(
                 .padding(top = 48.dp),
         ) {
             ResetDialogLHS(
-                modifier = modifier,
-                title,
-                text
+                modifier = modifier, title, text
             )
         }
         Box(
@@ -57,11 +55,7 @@ fun ResetDialog(
             contentAlignment = Alignment.Center,
         ) {
             ResetDialogRHS(
-                modifier = Modifier,
-                confirmText,
-                dismissText,
-                onConfirm,
-                onDismissRequest
+                modifier = Modifier, confirmText, dismissText, onConfirm, onDismissRequest
             )
         }
     }
@@ -72,11 +66,10 @@ fun ResetDialogLHS(modifier: Modifier = Modifier, title: String, prompt: String)
     Column(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
+    ) {
         Text(
             title,
-            modifier = modifier
-                .padding(vertical = 54.dp),
+            modifier = modifier.padding(vertical = 54.dp),
             style = MaterialTheme.typography.headlineLarge,
             color = Color.White
         )
@@ -113,9 +106,7 @@ fun ResetDialogRHS(
 
         Spacer(modifier = Modifier.size(32.dp))
         WideButton(
-            modifier = Modifier
-                .focusRequester(cancelFocus),
-            onClick = onDismissRequest
+            modifier = Modifier.focusRequester(cancelFocus), onClick = onDismissRequest
         ) {
             Text(
                 dismissText,

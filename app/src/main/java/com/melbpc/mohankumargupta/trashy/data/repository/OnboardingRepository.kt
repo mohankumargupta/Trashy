@@ -14,7 +14,7 @@ class OnboardingRepository @Inject constructor(
     val settingsRepository: SettingsRepositoryInterface,
 ) {
     private val _uiState = MutableStateFlow(CollectionInfo(infoDate = LocalDate.now()))
-    val uiState: StateFlow<CollectionInfo>  = _uiState.asStateFlow()
+    val uiState: StateFlow<CollectionInfo> = _uiState.asStateFlow()
 
     fun handle(intent: ScheduleIntent) {
         _uiState.update { current ->
@@ -23,6 +23,7 @@ class OnboardingRepository @Inject constructor(
                 is ScheduleIntent.GardenLidColor -> {
                     current.copy(gardenLidColor = intent.color)
                 }
+
                 is ScheduleIntent.RecyclingLidColor -> current.copy(recyclingLidColor = intent.color)
                 is ScheduleIntent.LastBinType -> {
                     current.copy(
@@ -35,9 +36,6 @@ class OnboardingRepository @Inject constructor(
     }
 
     suspend fun save() {
-        //withContext(Dispatchers.IO) {
-            settingsRepository.save(uiState.value)
-        //}
+        settingsRepository.save(uiState.value)
     }
-
 }

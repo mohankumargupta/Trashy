@@ -8,11 +8,6 @@ import com.melbpc.mohankumargupta.trashy.data.model.BinType
 import com.melbpc.mohankumargupta.trashy.data.model.ColorSwatch
 import com.melbpc.mohankumargupta.trashy.data.repository.SettingsRepositoryInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
-//import com.melbpc.mohankumargupta.trashy.ui.navigation.RouteHome
-//import dagger.assisted.Assisted
-//import dagger.assisted.AssistedFactory
-//import dagger.assisted.AssistedInject
-//import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -23,22 +18,18 @@ import javax.inject.Inject
 class HomeScreenViewModel @Inject constructor(
     private val settingsRepository: SettingsRepositoryInterface
 ) : ViewModel() {
-    val currentSettings = settingsRepository.load()
-
     val collection = settingsRepository.load().map { collectionInfo ->
         val isOnboardingComplete = settingsRepository.isOnboardingComplete()
         if (!isOnboardingComplete) {
-            return@map R.drawable.recycling_bin_black
+            return@map null
         }
-        val nextCollectionInfo = collectionInfo.nextBinRecycling()
-        val nextBin = if (nextCollectionInfo) BinType.RECYCLING else BinType.GARDEN
+        val nextBinIsRecycling = collectionInfo.nextBinRecycling()
+        val nextBin = if (nextBinIsRecycling) BinType.RECYCLING else BinType.GARDEN
         val nextLidColor =
             if (nextBin == BinType.RECYCLING) collectionInfo.recyclingLidColor else collectionInfo.gardenLidColor
         binDrawable(nextBin, nextLidColor)
     }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = null
+        scope = viewModelScope, started = SharingStarted.WhileSubscribed(5000), initialValue = null
     )
 
     @DrawableRes
@@ -69,4 +60,3 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 }
-

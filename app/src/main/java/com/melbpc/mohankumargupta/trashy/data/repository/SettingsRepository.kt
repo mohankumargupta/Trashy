@@ -6,12 +6,12 @@ import kotlinx.coroutines.flow.Flow
 
 class SettingsRepository(
     private val dataSource: SettingsDataSource
-): SettingsRepositoryInterface {
+) : SettingsRepositoryInterface {
     override fun load(): Flow<CollectionInfo> {
         return dataSource.load()
     }
 
-    override suspend fun save(settings: CollectionInfo){
+    override suspend fun save(settings: CollectionInfo) {
         dataSource.save(settings)
     }
 
@@ -23,5 +23,4 @@ class SettingsRepository(
         dataSource.reset()
 
     }
-
 }

@@ -1,12 +1,10 @@
 package com.melbpc.mohankumargupta.trashy.ui.home
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import com.melbpc.mohankumargupta.trashy.ui.components.ResetDialog
 import com.melbpc.mohankumargupta.trashy.ui.components.TwoPaneDialog
 
 @Composable
-fun ResetScreen(modifier: Modifier = Modifier, onConfirm: () -> Unit, onCancel: () -> Unit) {
+fun ResetScreen(onConfirm: () -> Unit, onCancel: () -> Unit) {
     TwoPaneDialog(
         title = "Reset settings",
         text = "Are you sure you want to reset settings?",
@@ -16,7 +14,6 @@ fun ResetScreen(modifier: Modifier = Modifier, onConfirm: () -> Unit, onCancel: 
             if (selectedOption == 0) {
                 onConfirm()
             }
-
             else {
                 onCancel()
             }
