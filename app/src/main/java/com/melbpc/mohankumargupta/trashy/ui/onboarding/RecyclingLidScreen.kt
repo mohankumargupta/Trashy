@@ -6,7 +6,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
 import com.melbpc.mohankumargupta.trashy.data.model.BinType
-import com.melbpc.mohankumargupta.trashy.data.model.ColorSwatch
 import com.melbpc.mohankumargupta.trashy.ui.components.BinColor
 
 @Composable
