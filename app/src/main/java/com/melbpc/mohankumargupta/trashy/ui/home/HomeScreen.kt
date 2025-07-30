@@ -52,7 +52,6 @@ fun HomeComposable(@DrawableRes bin:  Int?, onReset: () -> Unit) {
 
         if (showResetDialog) {
             ResetScreen(
-                modifier = Modifier,
                 onConfirm = onReset,
                 onCancel = {
                     showResetDialog = false
