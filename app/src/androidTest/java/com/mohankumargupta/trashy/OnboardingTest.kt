@@ -16,8 +16,13 @@ object NodeIdentifiers {
 }
 
 @RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
 class OnboardingTest {
-    @get:Rule
+
+    @get:Rule(order = 0)
+    val hiltRule = HiltAndroidRule(this)
+
+    @get:Rule(order = 1)
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     private fun collectionDayScreen() {
