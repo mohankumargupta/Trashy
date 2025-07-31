@@ -4,6 +4,7 @@ import com.melbpc.mohankumargupta.trashy.data.model.BinType
 import com.melbpc.mohankumargupta.trashy.data.model.CollectionInfo
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import java.time.DayOfWeek
 import java.time.LocalDate
 
 class CollectionInfoTest {
@@ -13,7 +14,7 @@ class CollectionInfoTest {
         val collectionInfo = CollectionInfo(
             infoDate = infoDate,
             lastCollectionBinType = BinType.RECYCLING,
-            collectionDay = "Monday"
+            collectionDay = DayOfWeek.MONDAY
         )
 
         val result = collectionInfo.getReferenceRecyclingDate() // <--- Call method on instance
@@ -28,7 +29,7 @@ class CollectionInfoTest {
         val collectionInfo = CollectionInfo(              // <--- Create instance
             infoDate = infoDate,
             lastCollectionBinType = BinType.GARDEN,
-            collectionDay = "Monday"
+            collectionDay = DayOfWeek.MONDAY
         )
 
         val result = collectionInfo.getReferenceRecyclingDate() // <--- Call method on instance
@@ -43,7 +44,7 @@ class CollectionInfoTest {
         val collectionInfo = CollectionInfo(              // <--- Create instance
             infoDate = infoDate,
             lastCollectionBinType = BinType.RECYCLING,
-            collectionDay = "Monday"
+            collectionDay = DayOfWeek.MONDAY
         )
 
         val result = collectionInfo.getReferenceRecyclingDate() // <--- Call method on instance
@@ -58,7 +59,7 @@ class CollectionInfoTest {
         val collectionInfo = CollectionInfo(              // <--- Create instance
             infoDate = infoDate,
             lastCollectionBinType = BinType.GARDEN,
-            collectionDay = "Monday"
+            collectionDay = DayOfWeek.MONDAY
         )
 
         val result = collectionInfo.getReferenceRecyclingDate() // <--- Call method on instance
@@ -71,7 +72,7 @@ class CollectionInfoTest {
     fun `nextBin returns RECYCLING when next collection is recycling week`() {
         // A Thursday-based schedule, last collected GARDEN on 2024-05-23
         val info = CollectionInfo(
-            collectionDay = "Thursday",
+            collectionDay = DayOfWeek.THURSDAY,
             infoDate = LocalDate.of(2024, 5, 23), // Thursday
             lastCollectionBinType = BinType.GARDEN
         )
@@ -86,7 +87,7 @@ class CollectionInfoTest {
     fun `nextBin returns GARDEN when next collection is garden week`() {
         // A Monday-based schedule, last collected RECYCLING on 2024-06-03
         val info = CollectionInfo(
-            collectionDay = "Monday",
+            collectionDay = DayOfWeek.MONDAY,
             infoDate = LocalDate.of(2024, 6, 3), // Monday
             lastCollectionBinType = BinType.RECYCLING
         )
@@ -101,7 +102,7 @@ class CollectionInfoTest {
     fun `nextBin same day as infoDate returns lastCollectionBinType`() {
         // A Wednesday-based schedule, last collected GARDEN on 2024-07-17
         val info = CollectionInfo(
-            collectionDay = "Wednesday",
+            collectionDay = DayOfWeek.WEDNESDAY,
             infoDate = LocalDate.of(2024, 7, 17), // Wednesday
             lastCollectionBinType = BinType.GARDEN
         )
