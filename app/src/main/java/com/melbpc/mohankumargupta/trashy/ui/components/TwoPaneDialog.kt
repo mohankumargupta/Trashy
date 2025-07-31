@@ -21,6 +21,8 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -50,7 +52,8 @@ fun TwoPaneDialog(
                         Color(0xFF0A0A0A)
                     )
                 )
-            ),
+            )
+        ,
         contentAlignment = Alignment.Center
     ) {
         Surface(
@@ -92,7 +95,10 @@ fun DialogLHS(
             .padding(end = 36.dp), // Add padding to create space between columns
         verticalArrangement = Arrangement.spacedBy(48.dp, Alignment.Top)
     ) {
-        Text(title, style = MaterialTheme.typography.headlineLarge)
+        Text(title,
+            style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier.semantics { contentDescription = title }
+        )
         Text(text, style = MaterialTheme.typography.bodyLarge)
     }
 }
