@@ -123,7 +123,11 @@ fun DialogRHS(
     ) {
         itemsIndexed(options) { index, option ->
             val isSelected = index == selectedOption
-            val modifierSettings = Modifier.clip(RoundedCornerShape(12.dp))
+            val modifierSettings = Modifier
+                .clip(RoundedCornerShape(12.dp))
+                .semantics {
+                    contentDescription = option
+                }
 
             ListItem(
                 modifier = if (isSelected) {
@@ -134,6 +138,7 @@ fun DialogRHS(
                 selected = isSelected,
                 onClick = { onOptionSelected(index) },
                 headlineContent = { Text(option) },
+
             )
         }
     }
