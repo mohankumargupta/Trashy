@@ -1,5 +1,9 @@
 package com.melbpc.mohankumargupta.trashy.ui.navigation
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -32,6 +36,9 @@ fun AppNavigation(
             rememberSavedStateNavEntryDecorator(),
             rememberViewModelStoreNavEntryDecorator()
         ),
+        transitionSpec = {
+            fadeIn(tween(1000)) togetherWith fadeOut(tween(1000))
+        },
         entryProvider = entryProvider {
 
             entry<RouteInitialScreen> {
@@ -43,8 +50,6 @@ fun AppNavigation(
                         onReset = {
                             backStack.clear()
                             backStack.add(RouteInitialScreen)
-                            //backStack.add(RouteOnboardingCollectionDay)
-                            //backStack.add(RouteInitialScreen)
                         }
                     )
                 } else {
@@ -87,20 +92,6 @@ fun AppNavigation(
                     }
                 )
             }
-
-//            entry<RouteHome> { key ->
-//                val viewModel = hiltViewModel<HomeScreenViewModel, HomeScreenViewModel.Factory>(
-//                    creationCallback = { factory ->
-//                        factory.create(key)
-//                    }
-//                )
-//                HomeScreen(
-//                    viewModel = viewModel,
-//                    onReset = {
-//                        backStack.add(RouteOnboardingCollectionDay)
-//                    }
-//                )
-//            }
         }
     )
 }
