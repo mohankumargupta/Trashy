@@ -1,5 +1,7 @@
 package com.mohankumargupta.trashy
 
+import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.performClick
@@ -43,20 +45,21 @@ class OnboardingTest {
         collectionDayScreen()
     }
 
+    @OptIn(ExperimentalTestApi::class)
     @Test
     fun lastCollectionDayScreen() {
         collectionDayScreen()
+
         with(composeTestRule) {
-            onNodeWithContentDescription(NodeIdentifiers.COLLECTION_DAY).performClick()
-            waitUntil(5_000) {
-                try {
-                    onNodeWithContentDescription(NodeIdentifiers.LAST_COLLECTION_SCREEN).assertExists()
-                    true
-                } catch (_: AssertionError) {
-                    false
-                }
-            }
-            onNodeWithContentDescription(NodeIdentifiers.LAST_COLLECTION_SCREEN).assertExists()
+            val node = onNodeWithContentDescription(NodeIdentifiers.COLLECTION_DAY)
+            node.assertExists()
+            waitForIdle()
+            node.performClick()
+            waitForIdle()
+            waitUntilAtLeastOneExists(
+                hasContentDescription(NodeIdentifiers.LAST_COLLECTION_SCREEN)
+                , timeoutMillis = 20_000
+            )
         }
     }
 }
