@@ -4,6 +4,7 @@ import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsFocused
+import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
@@ -23,6 +24,7 @@ object NodeIdentifiers {
     const val GARDEN_LID_COLOR_SCREEN = "Pick color for Garden bin"
     const val PURPLE_LID = "Purple"
     const val BLUE_LID = "Blue"
+    const val HOME_SCREEN_BACKGROUND = "Background Image"
 }
 
 @HiltAndroidTest
@@ -55,6 +57,17 @@ class OnboardingTest {
     private fun gardenLidColorScreen() {
         composeTestRule.apply {
             onNodeWithText(NodeIdentifiers.GARDEN_LID_COLOR_SCREEN).assertIsDisplayed()
+        }
+    }
+
+    @OptIn(ExperimentalTestApi::class)
+    private fun homeScreen() {
+        composeTestRule.apply {
+            waitUntilAtLeastOneExists(
+            hasContentDescription(NodeIdentifiers.HOME_SCREEN_BACKGROUND),
+                timeoutMillis = 10000
+            )
+            onNodeWithContentDescription(NodeIdentifiers.HOME_SCREEN_BACKGROUND).assertIsDisplayed()
         }
     }
 
@@ -92,5 +105,7 @@ class OnboardingTest {
                 SemanticsActions.OnClick
             )
         }
+
+        homeScreen()
     }
 }
