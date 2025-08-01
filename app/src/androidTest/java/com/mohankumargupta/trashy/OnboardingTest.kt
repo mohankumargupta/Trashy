@@ -20,6 +20,9 @@ object NodeIdentifiers {
     const val LAST_COLLECTION_SCREEN = "Last Collection Bin"
     const val LAST_BIN_TYPE = "Recycling"
     const val RECYCLING_LID_COLOR_SCREEN = "Pick color for Recycling bin"
+    const val GARDEN_LID_COLOR_SCREEN = "Pick color for Garden bin"
+    const val PURPLE_LID = "Purple"
+    const val BLUE_LID = "Blue"
 }
 
 @HiltAndroidTest
@@ -45,7 +48,13 @@ class OnboardingTest {
 
     private fun recyclingLidColorScreen() {
         composeTestRule.apply {
-            onNodeWithContentDescription(NodeIdentifiers.RECYCLING_LID_COLOR_SCREEN).assertIsDisplayed()
+            onNodeWithText(NodeIdentifiers.RECYCLING_LID_COLOR_SCREEN).assertIsDisplayed()
+        }
+    }
+
+    private fun gardenLidColorScreen() {
+        composeTestRule.apply {
+            onNodeWithText(NodeIdentifiers.GARDEN_LID_COLOR_SCREEN).assertIsDisplayed()
         }
     }
 
@@ -72,17 +81,16 @@ class OnboardingTest {
         }
 
         recyclingLidColorScreen()
+        composeTestRule.apply {
+            onNodeWithContentDescription(NodeIdentifiers.BLUE_LID).performSemanticsAction(
+                SemanticsActions.OnClick
+            )
+        }
+        gardenLidColorScreen()
+        composeTestRule.apply {
+            onNodeWithContentDescription(NodeIdentifiers.PURPLE_LID).performSemanticsAction(
+                SemanticsActions.OnClick
+            )
+        }
     }
-
-//    @OptIn(ExperimentalTestApi::class)
-//    @Test
-//    fun lastCollectionDayScreen() {
-//        collectionDayScreen()
-//        composeTestRule.apply {
-//            onNodeWithContentDescription(NodeIdentifiers.COLLECTION_DAY).performSemanticsAction(
-//                SemanticsActions.OnClick
-//            )
-//            onNodeWithContentDescription(NodeIdentifiers.LAST_COLLECTION_SCREEN).assertIsDisplayed()
-//        }
-//    }
 }

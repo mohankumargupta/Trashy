@@ -19,6 +19,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.Border
@@ -55,7 +57,7 @@ fun BinColor(modifier: Modifier = Modifier, binType: BinType, onClick: (ColorSwa
             ) {
                 items(rowColors) { color ->
                     ColorButton(
-                        color = color.toColor(),
+                        color = color,
                         onSelectColor = { onClick(color) }
                     )
                 }
@@ -67,7 +69,7 @@ fun BinColor(modifier: Modifier = Modifier, binType: BinType, onClick: (ColorSwa
 @Composable
 fun ColorButton(
     modifier: Modifier = Modifier,
-    color: Color,
+    color: ColorSwatch,
     onSelectColor: () -> Unit
 
 ) {
@@ -75,6 +77,9 @@ fun ColorButton(
 
     OutlinedButton(
         modifier = modifier
+            .semantics {
+                contentDescription = color.name
+            }
             .onFocusChanged { focusState ->
                 isFocused = focusState.isFocused
             }
@@ -90,8 +95,8 @@ fun ColorButton(
             )
         ),
         colors = ButtonDefaults.colors(
-            containerColor = color,
-            focusedContainerColor = color
+            containerColor = color.toColor(),
+            focusedContainerColor = color.toColor(),
         ),
         scale = ButtonDefaults.scale(focusedScale = 1.2f),
         contentPadding = PaddingValues(0.dp), // Remove default padding
