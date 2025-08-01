@@ -2,8 +2,11 @@ package com.mohankumargupta.trashy
 
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performSemanticsAction
 import com.melbpc.mohankumargupta.trashy.MainActivity
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -15,6 +18,8 @@ object NodeIdentifiers {
     const val COLLECTION_DAY_SCREEN_TITLE = "Welcome to Trashy"
     const val COLLECTION_DAY = "Tuesday"
     const val LAST_COLLECTION_SCREEN = "Last Collection Bin"
+    const val LAST_BIN_TYPE = "Recycling"
+    const val RECYCLING_LID_COLOR_SCREEN = "Pick color for Recycling bin"
 }
 
 @HiltAndroidTest
@@ -27,7 +32,20 @@ class OnboardingTest {
 
     private fun collectionDayScreen() {
         composeTestRule.apply {
-            onNodeWithContentDescription(NodeIdentifiers.COLLECTION_DAY_SCREEN_TITLE).assertExists()
+            onNodeWithContentDescription(NodeIdentifiers.COLLECTION_DAY_SCREEN_TITLE).assertIsDisplayed()
+            onNodeWithContentDescription("Monday").assertIsFocused()
+        }
+    }
+
+    private fun lastCollectionScreen() {
+        composeTestRule.apply {
+            onNodeWithContentDescription(NodeIdentifiers.LAST_COLLECTION_SCREEN).assertIsDisplayed()
+        }
+    }
+
+    private fun recyclingLidColorScreen() {
+        composeTestRule.apply {
+            onNodeWithContentDescription(NodeIdentifiers.RECYCLING_LID_COLOR_SCREEN).assertIsDisplayed()
         }
     }
 
@@ -38,12 +56,33 @@ class OnboardingTest {
 
     @OptIn(ExperimentalTestApi::class)
     @Test
-    fun lastCollectionDayScreen() {
+    fun onboarding() {
         collectionDayScreen()
         composeTestRule.apply {
             onNodeWithContentDescription(NodeIdentifiers.COLLECTION_DAY).performSemanticsAction(
-                SemanticsActions.OnClick)
-            onNodeWithContentDescription(NodeIdentifiers.LAST_COLLECTION_SCREEN).assertExists()
+                SemanticsActions.OnClick
+            )
         }
+        lastCollectionScreen()
+
+        composeTestRule.apply {
+            onNodeWithText(NodeIdentifiers.LAST_BIN_TYPE).performSemanticsAction(
+                SemanticsActions.OnClick
+            )
+        }
+
+        recyclingLidColorScreen()
     }
+
+//    @OptIn(ExperimentalTestApi::class)
+//    @Test
+//    fun lastCollectionDayScreen() {
+//        collectionDayScreen()
+//        composeTestRule.apply {
+//            onNodeWithContentDescription(NodeIdentifiers.COLLECTION_DAY).performSemanticsAction(
+//                SemanticsActions.OnClick
+//            )
+//            onNodeWithContentDescription(NodeIdentifiers.LAST_COLLECTION_SCREEN).assertIsDisplayed()
+//        }
+//    }
 }
