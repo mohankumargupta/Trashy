@@ -17,14 +17,21 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private var keepSplash = true
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen().setKeepOnScreenCondition {
+        val splashScreen = installSplashScreen()
+        var keepSplash = true
+        super.onCreate(savedInstanceState)
+
+        splashScreen.setKeepOnScreenCondition {
             keepSplash
         }
 
-        super.onCreate(savedInstanceState)
+        lifecycleScope.launch {
+            delay(5000)
+            keepSplash = false
+        }
+
+
         setContent {
             TrashyTheme {
                 Surface(
@@ -35,9 +42,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-        lifecycleScope.launch {
-            delay(5000)
-            keepSplash = false
-        }
+
     }
 }
