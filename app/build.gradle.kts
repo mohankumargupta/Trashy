@@ -83,6 +83,8 @@ dependencies {
     implementation(libs.kotlinx.serialization.core)
     implementation(libs.androidx.datastore.preferences)
 
+    implementation(libs.androidx.splashscreen)
+
     tasks.withType<Test>().configureEach {
         useJUnitPlatform()                  // run JUnit 5 in unit-test source-set
     }

@@ -104,6 +104,7 @@ class OnboardingTest {
             onNodeWithContentDescription(NodeIdentifiers.PURPLE_LID).performSemanticsAction(
                 SemanticsActions.OnClick
             )
+            waitForIdle()
         }
 
         homeScreen()
